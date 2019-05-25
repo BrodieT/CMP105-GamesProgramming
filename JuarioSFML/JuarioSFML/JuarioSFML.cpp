@@ -9,10 +9,12 @@
 
 void main(int argc, char** argv[])
 {
-	sf::RenderWindow window(sf::VideoMode(1300, 800), "Juario");
+	int screenWidth = 1216;
+	int screenHeight = 608;
+	sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight), "Juario");
 	Input input;
 	//Gamestate
-	Game game(&window, &input);
+	Game game(&window, &input, screenWidth, screenHeight);
 	Menu menu(&window, &input);
 	Controls controls(&window, &input);
 	Pause pause(&window, &input);
@@ -23,8 +25,12 @@ void main(int argc, char** argv[])
 	sf::Clock clock;
 	float deltaTime;
 
+
 	while (window.isOpen())
 	{
+
+	
+
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -154,7 +160,7 @@ void main(int argc, char** argv[])
 
 
 
-
+		
 
 	}
 }

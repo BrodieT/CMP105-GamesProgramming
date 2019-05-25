@@ -19,6 +19,8 @@ public:
 	void render(sf::RenderWindow* window);
 	std::vector<Tile>* getLevel() { return &level; };
 
+	std::vector<int>* getTileMap() { return &tileMap; };
+
 	void setPosition(sf::Vector2f pos) { position = pos; };
 
 protected:

@@ -10,10 +10,13 @@ public:
 	Player();
 	~Player();
 	void update(float deltaTime);
-	void collisionResponse(Sprite* sp);
+	void collisionResponse(Sprite* sp, int wall);
 	void LoseLife(int lives);
 	void UpdateLife(int lives);
 
+
+	int buildingW = 0;
+	sf::Vector2f buildingPos;
 
 	Input* input;
 	float scale;

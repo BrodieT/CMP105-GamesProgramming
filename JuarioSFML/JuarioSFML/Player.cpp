@@ -38,21 +38,19 @@ void Player::update(float deltaTime)
 
 	AnimatedSprite::update(deltaTime);
 	//jump
-	if (input->isKeyDown(sf::Keyboard::Up) && falling == false)
+	if (input->isKeyDown(sf::Keyboard::W) && falling == false)
 	{
-		if (getPosition().x > 256 && getPosition().x < 320 && getPosition().y < 658 && getPosition().y > 466)
+		if (getPosition().x > buildingPos.x - (((buildingW / 2) - 1) * 32) && getPosition().x < buildingPos.x - (((buildingW / 2) - 3) * 32))
 		{
-			velocity.y = -4.f*scale;
+			std::printf("BigJump \n");
+			velocity.y = -5.f*scale;
 			falling = true;
 		}
-		else if (getPosition().x > 948 && getPosition().x < 1012 && getPosition().y < 850 && getPosition().y > 658)
+		else if (getPosition().x > buildingPos.x + (((buildingW / 2) - 3) * 32) && getPosition().x < buildingPos.x + (((buildingW / 2)) * 32))
 		{
-			velocity.y = -4.f*scale;
-			falling = true;
-		}
-		else if (getPosition().x > 948 && getPosition().x < 1012 && getPosition().y < 434 && getPosition().y > 274)
-		{
-			velocity.y = -4.f*scale;
+			std::printf("BigJump \n");
+
+			velocity.y = -5.f*scale;
 			falling = true;
 		}
 		else
@@ -65,14 +63,14 @@ void Player::update(float deltaTime)
 
 
 	//move right
-	if (input->isKeyDown(sf::Keyboard::Right))
+	if (input->isKeyDown(sf::Keyboard::D))
 	{
 		move((150 * deltaTime), 0);
 		currentAnimation = &walkR;
 	}
 
 	//move left
-	if (input->isKeyDown(sf::Keyboard::Left))
+	if (input->isKeyDown(sf::Keyboard::A))
 	{
 		move((-150 * deltaTime), 0);
 		currentAnimation = &walkL;
@@ -91,7 +89,7 @@ void Player::update(float deltaTime)
 		currentAnimation = &walkR;
 	}
 
-	if (getPosition().y >= 750)
+	/*if (getPosition().y >= 750)
 	{
 		setPosition(getPosition().x, 750 - getSize().y / 2);
 		falling = false;
@@ -101,7 +99,7 @@ void Player::update(float deltaTime)
 	{
 		velocity.y = -2.f*scale * 2;
 
-	}
+	}*/
 	updateAABB(); // update AABB
 
 	elapsedTime += deltaTime;
@@ -119,46 +117,77 @@ Player::~Player()
 {
 }
 
-void Player::collisionResponse(Sprite* sp)
+void Player::collisionResponse(Sprite* sp, int wall)
 {
 
-
 	sf::Vector2f collide(getPosition().x - sp->getPosition().x, getPosition().y - sp->getPosition().y);
-
-	if (abs(collide.x) > abs(collide.y))
+	
+	if (wall == 0)
 	{
+		if (abs(collide.x) > abs(collide.y))
+		{
 
+			if (collide.x < -5)
+			{
+				falling = true;
+
+				//right side
+				setPosition(sp->getPosition().x - getSize().x - 1, getPosition().y);
+				velocity.x = -10;
+				velocity.y = 10;// getVelocity().y;
+			}
+			if (collide.x > 5)
+			{
+				//left side
+				falling = true;
+				setPosition(sp->getPosition().x + sp->getSize().x + 1, getPosition().y);
+				velocity.x = 10;
+				velocity.y = 10;// getVelocity().y;
+
+			}
+		}
+		else if (abs(collide.x) < abs(collide.y))
+		{
+			//top side
+			if (collide.y < -5)
+			{
+				/*if (abs(collide.x) < abs(collide.y))
+				{*/
+				falling = false;
+				//}
+				setPosition(getPosition().x, sp->getPosition().y - getSize().y);
+				//velocity.y = 0;
+			}
+			//bottom side
+			if (collide.y > 5)
+			{
+				setPosition(getPosition().x, sp->getPosition().y + getSize().y);
+				velocity.y = 0;
+			}
+		}
+
+	}
+	else
+	{
 		if (collide.x < -5)
 		{
+			falling = true;
+
 			//right side
 			setPosition(sp->getPosition().x - getSize().x - 1, getPosition().y);
-			velocity.x = 0;
+			velocity.x = -10;
+			velocity.y = 10;// getVelocity().y;
 		}
 		if (collide.x > 5)
 		{
 			//left side
+			falling = true;
 			setPosition(sp->getPosition().x + sp->getSize().x + 1, getPosition().y);
-			velocity.x = 0;
+			velocity.x = 10;
+			velocity.y = 10;// getVelocity().y;
+
 		}
 	}
-	else
-	{
-		//top side
-		if (collide.y < -5)
-		{
-			falling = false;
-			setPosition(getPosition().x, sp->getPosition().y - getSize().y);
-			velocity.y = 0;
-		}
-		//bottom side
-		if (collide.y > 5)
-		{
-			setPosition(getPosition().x, sp->getPosition().y + getSize().y);
-			velocity.y = 0;
-		}
-	}
-
-
 
 }
 

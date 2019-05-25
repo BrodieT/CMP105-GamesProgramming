@@ -113,7 +113,7 @@ void Boss::update(float deltaTime)
 		{
 			if (checkCollision(&player, &(*world)[i]))
 			{
-				player.collisionResponse(&(*world)[i]);
+				player.collisionResponse(&(*world)[i], 0);
 			}
 		}
 	}
