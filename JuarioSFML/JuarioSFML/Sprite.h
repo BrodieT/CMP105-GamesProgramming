@@ -16,6 +16,8 @@ public:
 	void setAlive(bool live);
 	bool isAlive();
 
+	int direction;
+
 protected:
 	sf::Vector2f velocity;
 	sf::FloatRect AABB;

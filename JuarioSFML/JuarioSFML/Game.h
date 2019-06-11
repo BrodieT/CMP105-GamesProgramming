@@ -12,7 +12,7 @@
 #include"States.h"
 #include "Menu.h"
 #include "Animation.h"
-
+#include "Projectile.h"
 
 class Game {
 public:
@@ -30,6 +30,13 @@ public:
 
 	bool getPos();
 
+	void CheckPlayerCollisionsWithWorld(Player* p);
+
+	void fireBullet();
+
+
+	void CheckEnemyCollisionsWithWorld(Enemy* e);
+
 	GameState getState();
 	
 	sf::Vector2f Interpolate(const sf::Vector2f& pointA, const sf::Vector2f& pointB, float factor);
@@ -41,12 +48,13 @@ public:
 
 private:
 
-
 	//render window pointer and input class
 	sf::RenderWindow* window;
 	Input* input;
+
 	//Viewport object (camera)
 	sf::View player_view;
+
 	//Target position for the viewport(camera), used to interpolate the camera position
 	sf::Vector2f targetCam;
 	
@@ -59,8 +67,8 @@ private:
 	sf::Texture skyBackTex;
 
 	//Room Textures and Objects
-	std::vector<sf::RectangleShape> roomBackObj;
-	std::vector<sf::Texture> roomBackTex;
+	sf::RectangleShape roomBackObj;
+	sf::Texture roomBackTex;
 	
 	//Tilemap for the base of the building
 	Map buildingBase;
@@ -75,13 +83,17 @@ private:
 	int screenWidth = 0;
 	int screenHeight = 0;
 
+
+	float buildingPosX;
+
 	//The player object
 	Player player;
-	//Texture for the player obj
-	sf::Texture playerTex;
+	Projectile bullet;
+
 
 	//FIXME enemies array
 	Enemy enemyTest;
+
 	//Tracks the current gamestate
 	GameState state;
 };

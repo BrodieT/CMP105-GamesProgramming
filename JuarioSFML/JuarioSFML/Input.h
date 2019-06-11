@@ -12,10 +12,13 @@ public:
 	void setKeyDown(int key);
 	void setKeyUp(int key);
 	bool isKeyDown(int key);
+	bool isMouseDown();
 
 	void setMouseX(int lx);
 	void setMouseY(int ly);
 	void setMousePosition(int lx, int ly);
+	void setMouseDown(bool click);
+
 	int getMouseX();
 	int getMouseY();
 

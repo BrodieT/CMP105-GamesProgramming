@@ -9,17 +9,17 @@ public:
 	~Enemy();
 
 	void update(float deltaTime);
-	void collisionResponse(Sprite* sp);
+	void collisionResponse(Sprite* sp, int wall);
 
-
-
+	bool falling = true;
+	float gravity;
 	float scale;
 	int width = getSize().x;
 	int height = getSize().y;
 
 	sf::Texture texture;
 
-	int direction = 1;
+	//int direction = 1;
 
 	sf::Vector2f new_pos;
 	sf::Vector2f position;

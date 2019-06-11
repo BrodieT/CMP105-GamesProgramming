@@ -2,6 +2,7 @@
 #include "AnimatedSprite.h"
 #include "Input.h"
 #include "Animation.h"
+#include "Enemy.h"
 
 class Player : public AnimatedSprite
 {
@@ -11,9 +12,12 @@ public:
 	~Player();
 	void update(float deltaTime);
 	void collisionResponse(Sprite* sp, int wall);
+	void enemyCollisionResponse(Sprite* e);
 	void LoseLife(int lives);
 	void UpdateLife(int lives);
 
+	sf::Texture playerTex;
+	sf::Texture utilityTex;
 
 	int buildingW = 0;
 	sf::Vector2f buildingPos;
@@ -26,17 +30,13 @@ public:
 	int height = getSize().y;
 	int lives = 3;
 
-	sf::RectangleShape life;
-
-	sf::Texture Life3;
-	sf::Texture Life2;
-	sf::Texture Life1;
-
+	bool isMoving = false;
+	
 
 protected:
-	Animation walkR;
+	Animation walk;
 	Animation jump;
-	Animation walkL;
+	Animation idle;
 	Animation* currentAnimation;
 
 };

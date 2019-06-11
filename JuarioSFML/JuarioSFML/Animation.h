@@ -7,7 +7,8 @@ public:
 	Animation();
 	~Animation();
 	void init(int left, int top, int width, int height, int frames, float speed);
-	sf::IntRect getCurrentFrame();
+	sf::IntRect getCurrentFrame(int direction);
+	
 	float getAnimationTime() { return animationSpeed; };
 	void nextFrame();
 	// could add functionality for play, pause, stop and loop

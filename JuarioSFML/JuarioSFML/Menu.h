@@ -2,6 +2,7 @@
 #include "SFML/Graphics.hpp"
 #include "States.h"
 #include "Input.h"
+
 class Menu
 {
 public:
@@ -20,6 +21,17 @@ private:
 	//render window pointer and input class
 	sf::RenderWindow* window;
 	Input* input;
+
+	sf::Texture buttonBack;
+	sf::RectangleShape playButton;
+	sf::RectangleShape controlsButton;
+	sf::RectangleShape exitButton;
+	sf::Text playText;
+	sf::Text controlsText;
+	sf::Text exitText;
+	sf::Text tileTxt;
+
+	sf::Font myFont;
 
 	sf::RectangleShape background;
 	sf::Texture menu;

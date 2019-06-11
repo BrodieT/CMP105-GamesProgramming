@@ -32,7 +32,15 @@ void Input::setMousePosition(int lx, int ly)
 	setMouseX(lx);
 	setMouseY(ly);
 }
+bool Input::isMouseDown()
+{
+	return mouse.left;
+}
 
+void Input::setMouseDown(bool click)
+{
+	mouse.left = click;
+}
 
 
 int Input::getMouseX()

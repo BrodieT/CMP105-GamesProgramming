@@ -24,10 +24,12 @@ Game::Game(sf::RenderWindow* hwnd, Input* in, int w, int h)
 	state = GameState::LEVEL;
 
 	//Setup the background texture and object for the base of the level
-	baseBackTex.loadFromFile("../gfx/Dump tower bottom1.png");
+	baseBackTex.loadFromFile("../gfx/BaseCityBackground.png");
 	baseBackObj.setSize(sf::Vector2f(screenWidth, screenHeight));
 	baseBackObj.setTexture(&baseBackTex);
-	baseBackObj.setPosition(0, 0);
+	baseBackObj.setPosition(0, -10);
+
+	
 
 
 	//FIXME enemy init
@@ -48,7 +50,7 @@ Game::Game(sf::RenderWindow* hwnd, Input* in, int w, int h)
 	//Setup the tilemap
 	Tile tile;
 	std::vector<Tile> tiles;
-	for (int i = 0; i < 7; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		tile.setSize(sf::Vector2f(32, 32));
 		tile.setAlive(true);
@@ -56,12 +58,18 @@ Game::Game(sf::RenderWindow* hwnd, Input* in, int w, int h)
 	}
 	tiles[0].setAlive(false);
 	tiles[0].setTextureRect(sf::IntRect(187, 51, 16, 16));
+
 	tiles[1].setTextureRect(sf::IntRect(0, 0, 16, 16));
-	tiles[2].setTextureRect(sf::IntRect(17, 0, 16, 16));
+	tiles[2].setTextureRect(sf::IntRect(17, 0, 16, 16)); //
 	tiles[3].setTextureRect(sf::IntRect(34, 0, 16, 16));
-	tiles[4].setTextureRect(sf::IntRect(0, 34, 16, 16));
-	tiles[5].setTextureRect(sf::IntRect(17, 34, 16, 16));
-	tiles[6].setTextureRect(sf::IntRect(34, 34, 16, 16));
+	
+	tiles[4].setTextureRect(sf::IntRect(0, 17, 16, 16));
+	tiles[5].setTextureRect(sf::IntRect(17, 17, 16, 16)); //
+	tiles[6].setTextureRect(sf::IntRect(34, 17, 16, 16));
+
+	tiles[7].setTextureRect(sf::IntRect(0, 34, 16, 16));
+	tiles[8].setTextureRect(sf::IntRect(17, 34, 16, 16)); //
+	tiles[9].setTextureRect(sf::IntRect(34, 34, 16, 16));
 	
 	//Set the tileset of each of the level components
 	buildingBase.setTileSet(tiles);
@@ -87,11 +95,11 @@ Game::Game(sf::RenderWindow* hwnd, Input* in, int w, int h)
 
 #pragma region FillTileMaps
 	//Vectors to store each possible row in the building map components to be added dynamically
-	std::vector<int> FloorLeftOpening = { 6, 0, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6 };
-	std::vector<int> FloorRightOpening = { 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 6 };
-	std::vector<int> Wall = { 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6 };
-	std::vector<int> Door = { 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-	std::vector<int> Floor = { 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 };
+	std::vector<int> FloorLeftOpening = { 8, 0, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 8 };
+	std::vector<int> FloorRightOpening = { 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 8 };
+	std::vector<int> Wall = { 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8 };
+	std::vector<int> Door = { 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+	std::vector<int> Floor = { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 };
 
 	//Tracks which floor is to be placed
 	int floorTracker = 0;
@@ -109,7 +117,7 @@ Game::Game(sf::RenderWindow* hwnd, Input* in, int w, int h)
 				baseBuildMp.insert(baseBuildMp.begin(), Floor.at(j));
 			}
 		}//Add the doorway pieces to the second and third row (standard wall piece with blank tiles on one side to allow passage by player
-		else if (i == 1 || i == 2)
+		else if (i == 1 || i == 2 || i == 3 || i == 4)
 		{
 			for (int j = 0; j < buildingWidth; j++)
 			{
@@ -215,23 +223,29 @@ Game::Game(sf::RenderWindow* hwnd, Input* in, int w, int h)
 
 #pragma endregion
 
-	//Init player character
-	playerTex.loadFromFile("../gfx/Juario.png");
-	player.setSize(sf::Vector2f(25, 50));
-	player.setTexture(&playerTex);
+	//Init player character	
 	player.setPosition(5, screenHeight - 400);
 	player.input = input;
-	player.setVelocity(0, 10);
 
 	//Init enemy character
+	enemyTest.setPosition(screenWidth / 2, 50);
 
-	enemyTest.setSize(sf::Vector2f(25, 50));
-	enemyTest.setTexture(&playerTex);
-	enemyTest.setPosition(screenWidth / 2, screenHeight - 400);
-	enemyTest.setVelocity(0, 10);
+
 
 	player.buildingW = buildingWidth;
 	player.buildingPos = sf::Vector2f(((screenWidth / 2)), (0));
+
+	roomBackTex.loadFromFile("../gfx/Dump tower bottom2.png");
+	roomBackObj.setSize(sf::Vector2f(buildingWidth*32, buildingHeight*32));
+	roomBackObj.setTexture(&roomBackTex);
+	roomBackObj.setPosition(sf::Vector2f(((screenWidth / 2) - (buildingWidth / 2) * 32), (0)));
+
+	buildingPosX = (screenWidth / 2) - (buildingWidth / 2) * 32;
+
+	skyBackTex.loadFromFile("../gfx/SkyBack.png");
+	skyBackObj.setSize(sf::Vector2f(screenWidth, screenHeight));
+	skyBackObj.setTexture(&skyBackTex);
+	skyBackObj.setPosition(sf::Vector2f(0, 0));
 
 }
 
@@ -250,6 +264,24 @@ void Game::handleInput(float deltaTime, Input input)
 		state = GameState::BOSS;
 
 	}*/
+
+	if (input.isKeyDown(sf::Keyboard::F) && bullet.getActive() == false)
+	{
+		input.setKeyUp(sf::Keyboard::F);
+		fireBullet();
+	}
+	else if (input.isKeyDown(sf::Keyboard::G) && bullet.getActive() == true)
+	{
+		bullet.setActive(false);
+	}
+}
+
+void Game::fireBullet()
+{
+	std::printf("Fire! \n");
+	bullet.setPosition(player.getPosition());
+	bullet.direction = player.direction;
+	bullet.setActive(true);
 }
 
 void Game::update(float deltaTime)
@@ -273,6 +305,9 @@ void Game::update(float deltaTime)
 	}
 	//Update the viewport
 	window->setView(player_view);
+	roomBackObj.setPosition(sf::Vector2f(buildingPosX, (player_view.getCenter().y - (player_view.getSize().y/2))));
+
+	skyBackObj.setPosition(sf::Vector2f(0, player_view.getCenter().y - screenHeight/2));
 #pragma endregion
 
 
@@ -295,6 +330,11 @@ void Game::update(float deltaTime)
 	enemyTest.update(deltaTime);
 
 
+	if (bullet.getActive())
+	{
+		bullet.update(deltaTime);
+	}
+
 	//FIXME enemy update
 /*
 	for (int i = 0; i < 4; i++)
@@ -306,83 +346,125 @@ void Game::update(float deltaTime)
 #pragma endregion
 
 #pragma region Collisions
+	
+	CheckPlayerCollisionsWithWorld(&player);
+
+	CheckEnemyCollisionsWithWorld(&enemyTest);
+
+	if (checkCollision(&player, &enemyTest))
+	{
+		player.enemyCollisionResponse(&enemyTest);
+	}
+#pragma endregion
+
+
+
+
+}
+
+void Game::CheckPlayerCollisionsWithWorld(Player* p)
+{
 	//Tracks if a collision is detected
-	bool colliding = false;
+	bool collide = false;
 
 	//Checks for collision between the player and the base of the building 
 	//and triggers the player collision response if necessary
 	std::vector<Tile>* buildingB = buildingBase.getLevel();
+	std::vector<Tile>* buildingCR = buildingChunkR.getLevel();
+	std::vector<Tile>* buildingCL = buildingChunkL.getLevel();
+
+
 	std::vector<int>* buildingBInt = buildingBase.getTileMap();
+	std::vector<int>* buildingCLInt = buildingChunkL.getTileMap();
+	std::vector<int>* buildingCRInt = buildingChunkR.getTileMap();
+
 
 	for (int i = 0; i < (int)buildingB->size(); i++)
 	{
 		// if "alive" check collision
 		if ((*buildingB)[i].isAlive())
 		{
-			if (checkCollision(&player, &(*buildingB)[i]))
+			if (checkCollision(p, &(*buildingB)[i]))
 			{
 				int wall = 0;
 
-				if (buildingBInt->at(i) == 6)
+				if (buildingBInt->at(i) == 8)
 				{
-					std::printf("Wall");
 					wall = 1;
 				}
 				else if (buildingBInt->at(i) == 5)
 				{
-					std::printf("Floor");
 					wall = 0;
 				}
 
-				colliding = true;
-				
-				player.collisionResponse(&(*buildingB)[i], wall);
+				collide = true;
+
+				p->collisionResponse(&(*buildingB)[i], wall);
 			}
 
-			if (checkCollision(&enemyTest, &(*buildingB)[i]))
-			{
-				if (buildingBInt->at(i) == 6)
-				{
-				//	std::printf("Wall");
-				}
-				else if (buildingBInt->at(i) == 5)
-				{
-			//		std::printf("Floor");
 
-				}
-				enemyTest.collisionResponse(&(*buildingB)[i]);
-			}
 		}
 	}
 
 	//Checks for collision between the player and the Right chunk of the building 
 	//and triggers the player collision response if necessary
-	std::vector<Tile>* buildingCR = buildingChunkR.getLevel();
 	for (int i = 0; i < (int)buildingCR->size(); i++)
 	{
 		// if "alive" check collision
 		if ((*buildingCR)[i].isAlive())
 		{
-			if (checkCollision(&player, &(*buildingCR)[i]))
+			// if "alive" check collision
+			if ((*buildingCR)[i].isAlive())
 			{
-				colliding = true;
-				player.collisionResponse(&(*buildingCR)[i], 0);
+				if (checkCollision(p, &(*buildingCR)[i]))
+				{
+					int wall = 0;
+
+					if (buildingCRInt->at(i) == 8)
+					{
+						wall = 1;
+					}
+					else if (buildingCRInt->at(i) == 5)
+					{
+						wall = 0;
+					}
+
+					collide = true;
+
+					p->collisionResponse(&(*buildingCR)[i], wall);
+				}
+
+
 			}
 		}
 	}
 
 	//Checks for collision between the player and the Left chunk of the building 
 	//and triggers the player collision response if necessary
-	std::vector<Tile>* buildingCL = buildingChunkL.getLevel();
 	for (int i = 0; i < (int)buildingCL->size(); i++)
-	{
-		// if "alive" check collision
+	{// if "alive" check collision
 		if ((*buildingCL)[i].isAlive())
 		{
-			if (checkCollision(&player, &(*buildingCL)[i]))
+			// if "alive" check collision
+			if ((*buildingCL)[i].isAlive())
 			{
-				colliding = true;
-				player.collisionResponse(&(*buildingCL)[i],0);
+				if (checkCollision(p, &(*buildingCL)[i]))
+				{
+					int wall = 0;
+
+					if (buildingCLInt->at(i) == 8)
+					{
+						wall = 1;
+					}
+					else if (buildingCLInt->at(i) == 5)
+					{
+						wall = 0;
+					}
+
+					collide = true;
+
+					p->collisionResponse(&(*buildingCL)[i], wall);
+				}
 			}
 		}
 	}
@@ -395,50 +477,163 @@ void Game::update(float deltaTime)
 		// if "alive" check collision
 		if ((*gTile)[i].isAlive())
 		{
-			if (checkCollision(&player, &(*gTile)[i]))
+			if (checkCollision(p, &(*gTile)[i]))
 			{
-				colliding = true;
-				player.collisionResponse(&(*gTile)[i],0);
+				collide = true;
+				p->collisionResponse(&(*gTile)[i], 0);
 			}
 		}
 	}
 
 	//If the player is colliding with nothing in the world, and therefore is in the air, set them to fall
 	//Partially rectifies the climbing walls glitch, and makes this error more difficult to replicate/exploit
-	if (colliding == false)
+	if (collide == false)
 	{
-		player.falling = true;
+		p->falling = true;
+	}
+}
+
+void Game::CheckEnemyCollisionsWithWorld(Enemy* e)
+{
+	//Tracks if a collision is detected
+	bool collide = false;
+
+	//Checks for collision between the player and the base of the building 
+	//and triggers the player collision response if necessary
+	std::vector<Tile>* buildingB = buildingBase.getLevel();
+	std::vector<Tile>* buildingCR = buildingChunkR.getLevel();
+	std::vector<Tile>* buildingCL = buildingChunkL.getLevel();
+
+
+	std::vector<int>* buildingBInt = buildingBase.getTileMap();
+	std::vector<int>* buildingCLInt = buildingChunkL.getTileMap();
+	std::vector<int>* buildingCRInt = buildingChunkR.getTileMap();
+
+
+	for (int i = 0; i < (int)buildingB->size(); i++)
+	{
+		// if "alive" check collision
+		if ((*buildingB)[i].isAlive())
+		{
+			if (checkCollision(e, &(*buildingB)[i]))
+			{
+				int wall = 0;
+
+				if (buildingBInt->at(i) == 8)
+				{
+					wall = 1;
+				}
+				else if (buildingBInt->at(i) == 5)
+				{
+					wall = 0;
+				}
+
+				collide = true;
+
+				e->collisionResponse(&(*buildingB)[i], wall);
+			}
+
+			
+		}
 	}
 
-	//FIXME check enemy collisions with the player
-//for (int i = 0; i < 4; i++)
-//{
-//	if (checkCollision(&player, &enemy[i]))
-//	{
-//		//enemy[i].collisionResponse(&player);
-//		//player.falling = true;
-//	}
-//}
-#pragma endregion
-
-
-
-
-	//FIXME player lives 
-/*
-	if (player.lives == 0)
+	//Checks for collision between the player and the Right chunk of the building 
+	//and triggers the player collision response if necessary
+	for (int i = 0; i < (int)buildingCR->size(); i++)
 	{
-		player.setPosition(0, 0);
+		// if "alive" check collision
+		if ((*buildingCR)[i].isAlive())
+		{
+			// if "alive" check collision
+			if ((*buildingCR)[i].isAlive())
+			{
+				if (checkCollision(e, &(*buildingCR)[i]))
+				{
+					int wall = 0;
+
+					if (buildingCRInt->at(i) == 8)
+					{
+						wall = 1;
+					}
+					else if (buildingCRInt->at(i) == 5)
+					{
+						wall = 0;
+					}
+
+					collide = true;
+
+					e->collisionResponse(&(*buildingCR)[i], wall);
+				}
+
+				
+			}
+		}
 	}
-*/
+
+	//Checks for collision between the player and the Left chunk of the building 
+	//and triggers the player collision response if necessary
+	for (int i = 0; i < (int)buildingCL->size(); i++)
+	{// if "alive" check collision
+		if ((*buildingCL)[i].isAlive())
+		{
+			// if "alive" check collision
+			if ((*buildingCL)[i].isAlive())
+			{
+				if (checkCollision(e, &(*buildingCL)[i]))
+				{
+					int wall = 0;
+
+					if (buildingCLInt->at(i) == 8)
+					{
+						wall = 1;
+					}
+					else if (buildingCLInt->at(i) == 5)
+					{
+						wall = 0;
+					}
+
+					collide = true;
+
+					e->collisionResponse(&(*buildingCL)[i], wall);
+				}
+			}
+		}
+	}
+
+	//Checks for collision between the player and the ground outside of the building 
+	//and triggers the player collision response if necessary
+	std::vector<Tile>* gTile = ground.getLevel();
+	for (int i = 0; i < (int)gTile->size(); i++)
+	{
+		// if "alive" check collision
+		if ((*gTile)[i].isAlive())
+		{
+			if (checkCollision(e, &(*gTile)[i]))
+			{
+				collide = true;
+				e->collisionResponse(&(*gTile)[i], 0);
+			}
+		}
+	}
+
+	//If the player is colliding with nothing in the world, and therefore is in the air, set them to fall
+	//Partially rectifies the climbing walls glitch, and makes this error more difficult to replicate/exploit
+	if (collide == false)
+	{
+		e->falling = true;
+	}
 }
 
 void Game::render()
 {
 
 	beginDraw();
-	window->draw(baseBackObj);	
+
 	window->draw(skyBackObj);
+
+	window->draw(baseBackObj);	
+	window->draw(roomBackObj);
+
 
 	ground.render(window);
 
@@ -447,7 +642,7 @@ void Game::render()
 	buildingChunkR.render(window);
 
 	window->draw(player);
-
+	window->draw(enemyTest);
 	//FIXME render enemies
 	//for (int i = 0; i < 4; i++)
 	//{
@@ -455,6 +650,12 @@ void Game::render()
 	//}
 	//FIXME player lives render
 	//window->draw(player.life);
+
+	if (bullet.getActive())
+	{
+		std::printf("Firing! \n");
+		window->draw(bullet);
+	}
 
 	endDraw();
 

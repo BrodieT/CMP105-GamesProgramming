@@ -9,22 +9,22 @@ Player::Player()
 	scale = 200.f;
 	gravity = 8.0f*scale;
 	falling = true;
+	direction = 1;
+	setSize(sf::Vector2f(48, 48));
+	setTexture(&playerTex);
 
-	Life1.loadFromFile("../gfx/Goomba.png");
-	Life2.loadFromFile("../gfx/Mushroom.png");
-	Life3.loadFromFile("../gfx/MushroomTrans.png");
+	setVelocity(0, 10);
 
-	life.setSize(sf::Vector2f(100, 50));
-	life.setPosition(100, 50);
+	playerTex.loadFromFile("../gfx/WalkCycle.png");
+	utilityTex.loadFromFile("../gfx/Utility.png");
+
+	walk.init(0, 0, 32, 32, 2, 0.3f);
+	jump.init(32, 0, 32, 32, 1, 0.2f);
+	idle.init(0, 0, 32, 32, 1, 0.2f);
 
 
-
-	walkR.init(0, 0, 202, 325, 4, 0.3f);
-	jump.init(0, 326, 200, 325, 1, 0.2f);
-	walkL.init(0, 0, 202, 325, 4, 0.3f);
-
-	currentAnimation = &walkR;
-	frame = currentAnimation->getCurrentFrame();
+	currentAnimation = &jump;
+	frame = currentAnimation->getCurrentFrame(direction);
 	setTextureRect(frame);
 
 
@@ -37,18 +37,20 @@ void Player::update(float deltaTime)
 
 
 	AnimatedSprite::update(deltaTime);
+
+	
+
+
 	//jump
 	if (input->isKeyDown(sf::Keyboard::W) && falling == false)
 	{
 		if (getPosition().x > buildingPos.x - (((buildingW / 2) - 1) * 32) && getPosition().x < buildingPos.x - (((buildingW / 2) - 3) * 32))
 		{
-			std::printf("BigJump \n");
 			velocity.y = -5.f*scale;
 			falling = true;
 		}
 		else if (getPosition().x > buildingPos.x + (((buildingW / 2) - 3) * 32) && getPosition().x < buildingPos.x + (((buildingW / 2)) * 32))
 		{
-			std::printf("BigJump \n");
 
 			velocity.y = -5.f*scale;
 			falling = true;
@@ -62,55 +64,69 @@ void Player::update(float deltaTime)
 
 
 
-	//move right
 	if (input->isKeyDown(sf::Keyboard::D))
 	{
 		move((150 * deltaTime), 0);
-		currentAnimation = &walkR;
+		isMoving = true;
+		direction = 1;
 	}
-
-	//move left
-	if (input->isKeyDown(sf::Keyboard::A))
+	else if (input->isKeyDown(sf::Keyboard::A))
 	{
 		move((-150 * deltaTime), 0);
-		currentAnimation = &walkL;
+		isMoving = true;
+		direction = -1;
+	}
+	else
+	{
+		isMoving = false;
 	}
 
 
 	//gravity
 	if (falling)
 	{
-		currentAnimation = &jump;
 		velocity.y += (gravity)*deltaTime;
 		move(velocity*deltaTime);
 	}
-	else
-	{
-		currentAnimation = &walkR;
-	}
 
-	/*if (getPosition().y >= 750)
-	{
-		setPosition(getPosition().x, 750 - getSize().y / 2);
-		falling = false;
-	}
 
-	if (getPosition().x == 1120 && input->isKeyDown(sf::Keyboard::Return))
-	{
-		velocity.y = -2.f*scale * 2;
-
-	}*/
 	updateAABB(); // update AABB
 
 	elapsedTime += deltaTime;
+
+	if (falling)
+	{
+		setTexture(&utilityTex);
+		currentAnimation = &jump;
+		std::printf("Jump");
+	}
+	else if (isMoving)
+	{
+		setTexture(&playerTex);
+
+		currentAnimation = &walk;
+		std::printf("Walk");
+	}
+	else
+	{
+		setTexture(&utilityTex);
+
+		currentAnimation = &idle;
+		std::printf("Idle");
+	}
+	
+
 
 	if (elapsedTime >= currentAnimation->getAnimationTime())
 	{
 		//next frame
 		currentAnimation->nextFrame();
-		setTextureRect(currentAnimation->getCurrentFrame());
+		setTextureRect(currentAnimation->getCurrentFrame(direction));
 		elapsedTime = 0;
 	}
+
+
+
 }
 
 Player::~Player()
@@ -191,18 +207,9 @@ void Player::collisionResponse(Sprite* sp, int wall)
 
 }
 
-void Player::LoseLife(int lives)
+void Player::enemyCollisionResponse(Sprite* e)
 {
-	lives = lives - 1;
-}
-
-void Player::UpdateLife(int lives)
-{
-	switch (lives)
-	{
-	case 1: life.setTexture(&Life1); break;
-	case 2: life.setTexture(&Life2); break;
-	case 3: life.setTexture(&Life3); break;
-	default: return;
-	}
+	sf::Vector2f force((getPosition().x +getSize().x/2) - (e->getPosition().x + e->getSize().x/2), -5);
+	velocity = force * (scale / 5);
+	falling = true;
 }

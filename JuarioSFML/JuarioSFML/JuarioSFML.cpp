@@ -59,14 +59,14 @@ void main(int argc, char** argv[])
 				if (event.mouseButton.button == sf::Mouse::Left)
 				{
 					//update input class
-					//input.setMouseLeftDown(true);
+					input.setMouseDown(true);
 				}
 				break;
 			case sf::Event::MouseButtonReleased:
 				if (event.mouseButton.button == sf::Mouse::Left)
 				{
 					//update input class
-					//input.setMouseLeftDown(false);
+					input.setMouseDown(false);
 				}
 				break;
 			default:
@@ -89,12 +89,8 @@ void main(int argc, char** argv[])
 		deltaTime = clock.restart().asSeconds();
 
 
-		if (input.isKeyDown(sf::Keyboard::Return) && state == GameState::MENU)
-		{
-			input.setKeyUp(sf::Keyboard::Return);
-			state = GameState::LEVEL;
-		}
-		else if (input.isKeyDown(sf::Keyboard::C) && state == GameState::MENU)
+		
+		if (input.isKeyDown(sf::Keyboard::C) && state == GameState::MENU)
 		{
 			input.setKeyUp(sf::Keyboard::C);
 			state = GameState::CONTROLS;
@@ -114,13 +110,7 @@ void main(int argc, char** argv[])
 			input.setKeyUp(sf::Keyboard::P);
 			state = GameState::LEVEL;
 		}
-		else if (input.isKeyDown(sf::Keyboard::E) && state == GameState::LEVEL)
-		{
-			input.setKeyUp(sf::Keyboard::E);
-
-			state = GameState::BOSS;
-
-		}
+		
 
 
 		switch (state)

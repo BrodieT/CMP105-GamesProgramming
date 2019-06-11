@@ -1,12 +1,2 @@
-﻿  Boss.cpp
-c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\player.h(25): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\player.h(26): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
+﻿  Projectile.cpp
   JuarioSFML.vcxproj -> C:\Users\templ\OneDrive\Documents\JuarioSFML\JuarioSFML\Debug\JuarioSFML.exe
