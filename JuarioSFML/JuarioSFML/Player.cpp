@@ -15,12 +15,11 @@ Player::Player()
 
 	setVelocity(0, 10);
 
-	playerTex.loadFromFile("../gfx/WalkCycle.png");
-	utilityTex.loadFromFile("../gfx/Utility.png");
+	playerTex.loadFromFile("../gfx/Juario3.png");
 
 	walk.init(0, 0, 32, 32, 2, 0.3f);
-	jump.init(32, 0, 32, 32, 1, 0.2f);
-	idle.init(0, 0, 32, 32, 1, 0.2f);
+	jump.init(32, 32, 32, 32, 2, 0.2f);
+	idle.init(0, 32, 32, 32, 1, 0.2f);
 
 
 	currentAnimation = &jump;
@@ -96,23 +95,19 @@ void Player::update(float deltaTime)
 
 	if (falling)
 	{
-		setTexture(&utilityTex);
 		currentAnimation = &jump;
-		std::printf("Jump");
+		//std::printf("Jump");
 	}
 	else if (isMoving)
 	{
-		setTexture(&playerTex);
 
 		currentAnimation = &walk;
-		std::printf("Walk");
+		//std::printf("Walk");
 	}
 	else
 	{
-		setTexture(&utilityTex);
-
 		currentAnimation = &idle;
-		std::printf("Idle");
+		//std::printf("Idle");
 	}
 	
 
@@ -121,6 +116,12 @@ void Player::update(float deltaTime)
 	{
 		//next frame
 		currentAnimation->nextFrame();
+
+		if (currentAnimation == &jump)
+		{
+			currentAnimation->setFrame(1);
+		}
+
 		setTextureRect(currentAnimation->getCurrentFrame(direction));
 		elapsedTime = 0;
 	}

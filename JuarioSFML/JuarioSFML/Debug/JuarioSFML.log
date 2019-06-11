@@ -1,2 +1,22 @@
-﻿  Projectile.cpp
+﻿  Player.cpp
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\enemy.h(17): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\enemy.h(18): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\player.h(29): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\player.h(30): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
   JuarioSFML.vcxproj -> C:\Users\templ\OneDrive\Documents\JuarioSFML\JuarioSFML\Debug\JuarioSFML.exe

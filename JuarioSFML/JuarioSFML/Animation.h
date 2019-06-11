@@ -11,6 +11,8 @@ public:
 	
 	float getAnimationTime() { return animationSpeed; };
 	void nextFrame();
+	void setFrame(int x) { currentFrame = x; };
+
 	// could add functionality for play, pause, stop and loop
 protected:
 	sf::IntRect frame;
