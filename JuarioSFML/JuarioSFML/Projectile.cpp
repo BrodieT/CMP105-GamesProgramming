@@ -6,11 +6,10 @@ Projectile::Projectile()
 {
 	setSize(sf::Vector2f(10, 7));
 	setPosition(0, 0);
-	setActive(false);
-
-	tex.loadFromFile("../gfx/bullet.png");
-	setTexture(&tex);
-	gravity = 2.0f*scale;
+	setAlive(false);
+	scale = 0.01;
+	setFillColor(sf::Color::Red);
+	setSize(sf::Vector2f(10, 5));
 }
 
 
@@ -19,24 +18,14 @@ Projectile::~Projectile()
 }
 
 void Projectile::update(float deltaTime)
-{
-	velocity.x = scale * direction;
-
-	move(velocity);
+{	
+	velocity.x = scale * dir.x * -1;
+	velocity.y = scale * dir.y * -1;
+	move(velocity);	
 }
 
 void Projectile::collisionResponse(Sprite* sp)
 {
-	setActive(false);
+	setAlive(false);
 }
 
-void Projectile::setActive(bool a)
-{
-	active = a;
-}
-
-
-bool Projectile::getActive()
-{
-	return active;
-}

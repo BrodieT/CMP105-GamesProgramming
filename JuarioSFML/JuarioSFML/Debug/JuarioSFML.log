@@ -1,4 +1,4 @@
-﻿  Player.cpp
+﻿  Game.cpp
 c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\enemy.h(17): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
           with
           [
@@ -9,14 +9,125 @@ c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\enemy.h(18): 
           [
               T=float
           ]
-c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\player.h(29): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\player.h(36): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\player.h(30): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\player.h(37): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
           with
           [
               T=float
           ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(17): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(18): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(30): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(200): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(204): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(208): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(221): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(227): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(231): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(236): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(239): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(241): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(243): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(246): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(257): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(258): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(261): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(262): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(265): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(266): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(284): warning C4244: 'argument': conversion from 'double' to 'unsigned int', possible loss of data
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(291): warning C4244: 'argument': conversion from 'double' to 'unsigned int', possible loss of data
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(294): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(297): warning C4244: 'argument': conversion from 'double' to 'unsigned int', possible loss of data
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(332): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(343): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(344): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(366): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(419): warning C4018: '<': signed/unsigned mismatch
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(450): warning C4018: '<': signed/unsigned mismatch
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(516): warning C4018: '<': signed/unsigned mismatch
   JuarioSFML.vcxproj -> C:\Users\templ\OneDrive\Documents\JuarioSFML\JuarioSFML\Debug\JuarioSFML.exe

@@ -9,14 +9,9 @@ public:
 
 	void update(float deltaTime);
 	void collisionResponse(Sprite* sp);
-	void setActive(bool a);
-	bool getActive();
-	void reInit();
-
-
+	
+	sf::Vector2f dir;
 	float scale = 50.0f;
-	float gravity = 0.0f;
 	bool active = false;
-	sf::Texture tex;
 };
 

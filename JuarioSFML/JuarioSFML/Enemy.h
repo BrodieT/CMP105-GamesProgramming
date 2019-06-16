@@ -24,5 +24,8 @@ public:
 	sf::Vector2f new_pos;
 	sf::Vector2f position;
 
+protected:
+	Animation walk;
+	Animation* currentAnimation;
 };
 

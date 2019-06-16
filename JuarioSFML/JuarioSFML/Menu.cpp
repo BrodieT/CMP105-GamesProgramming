@@ -10,19 +10,19 @@ Menu::Menu(sf::RenderWindow* hwnd, Input* in)
 	window = hwnd;
 	input = in;
 
-	if (!myFont.loadFromFile("../gfx/TACOM___.ttf"))
+	if (!myFont.loadFromFile("../gfx/Fonts/TACOM___.ttf"))
 	{
 		std::printf("Error loading font");
 	}
 
 
-	menu.loadFromFile("../gfx/MenuBackground.png");
+	menu.loadFromFile("../gfx/Backgrounds/MenuBackground.png");
 
 	background.setTexture(&menu);
 	background.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
 	background.setPosition(0, 0);
 
-	buttonBack.loadFromFile("../gfx/ButtonBack.png");
+	buttonBack.loadFromFile("../gfx/Backgrounds/ButtonBack.png");
 
 	playButton.setTexture(&buttonBack);
 	playButton.setSize(sf::Vector2f(175, 50));
@@ -93,6 +93,8 @@ void Menu::handleInput(float deltaTime)
 	//Play Button
 	if (playButton.getGlobalBounds().contains(sf::Vector2f(input->getMouseX(), input->getMouseY())) && input->isMouseDown() == true)
 	{
+		input->setMouseDown(false);
+
 		state = GameState::LEVEL;
 	}
 

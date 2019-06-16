@@ -46,6 +46,8 @@ public:
 
 	bool checkCollision(Sprite* s1, Sprite* s2);
 
+
+	void updateUI();
 private:
 
 	//render window pointer and input class
@@ -83,13 +85,33 @@ private:
 	int screenWidth = 0;
 	int screenHeight = 0;
 
+	int roomHeight = 0;
+	int roomWidth = 0;
+
+	sf::Texture roomTex1;
+	sf::Texture roomTex2;
+	sf::Texture roomTex3;
+
+	sf::RectangleShape room1;
+	sf::RectangleShape room2;
+	sf::RectangleShape room3;
 
 	float buildingPosX;
 
 	//The player object
 	Player player;
-	Projectile bullet;
 
+	//UI
+	sf::Font myFont;
+	sf::Text AmmoCounter;
+	sf::Text Health;
+	sf::RectangleShape HealthBar;
+	sf::RectangleShape AmmoBar;
+	sf::RectangleShape HealthBarBack;
+	sf::RectangleShape AmmoBarBack;
+	sf::RectangleShape UIBack1;
+	sf::RectangleShape UIBack2;
+	sf::Text Timer;
 
 	//FIXME enemies array
 	Enemy enemyTest;

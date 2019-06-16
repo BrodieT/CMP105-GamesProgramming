@@ -10,13 +10,20 @@ Enemy::Enemy()
 	scale = 100.f;
 	direction = -1.0f;
 	
-	texture.loadFromFile("../gfx/dump.png");
+	texture.loadFromFile("../gfx/Enemy/DumpPixelSuit.png");
 	setTexture(&texture);
 	setSize(sf::Vector2f(32, 32));
 	setVelocity(10, 0);
 	gravity = 8.0f*scale;
 	falling = true;
 	updateAABB();
+	walk.init(0, 0, 32, 32, 2, 0.1f);
+
+	setAlive(true);
+
+	currentAnimation = &walk;
+	frame = currentAnimation->getCurrentFrame(direction);
+	setTextureRect(frame);
 }
 
 void Enemy::update(float deltaTime)
@@ -35,6 +42,16 @@ void Enemy::update(float deltaTime)
 
 
 	updateAABB();
+
+	elapsedTime += deltaTime;
+
+	if (elapsedTime >= currentAnimation->getAnimationTime())
+	{
+		//next frame
+		currentAnimation->nextFrame();
+		setTextureRect(currentAnimation->getCurrentFrame(-direction));
+		elapsedTime = 0;
+	}
 }
 
 Enemy::~Enemy()

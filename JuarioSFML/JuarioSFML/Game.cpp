@@ -24,7 +24,9 @@ Game::Game(sf::RenderWindow* hwnd, Input* in, int w, int h)
 	state = GameState::LEVEL;
 
 	//Setup the background texture and object for the base of the level
-	baseBackTex.loadFromFile("../gfx/BaseCityBackground.png");
+	//baseBackTex.loadFromFile("../gfx/BaseCityBackground.png");
+	baseBackTex.loadFromFile("../gfx/Backgrounds/BaseCityBackground2.png");
+
 	baseBackObj.setSize(sf::Vector2f(screenWidth, screenHeight));
 	baseBackObj.setTexture(&baseBackTex);
 	baseBackObj.setPosition(0, -10);
@@ -32,20 +34,15 @@ Game::Game(sf::RenderWindow* hwnd, Input* in, int w, int h)
 	
 
 
-	//FIXME enemy init
-	//for (int i = 0; i < 4; i++)
-	//{
-	//	enemy[i].setPosition(350, enemy[i].lvl[i]);
-	//}
 
 
 #pragma region InitTileMaps
 
 	//Load in tilemap textures for all the level components
-	buildingBase.loadTexture("../gfx/Tiles1.png");
-	buildingChunkR.loadTexture("../gfx/Tiles1.png");
-	buildingChunkL.loadTexture("../gfx/Tiles1.png");
-	ground.loadTexture("../gfx/Tiles1.png");
+	buildingBase.loadTexture("../gfx/Backgrounds/Tiles1.png");
+	buildingChunkR.loadTexture("../gfx/Backgrounds/Tiles1.png");
+	buildingChunkL.loadTexture("../gfx/Backgrounds/Tiles1.png");
+	ground.loadTexture("../gfx/Backgrounds/Tiles1.png");
 
 	//Setup the tilemap
 	Tile tile;
@@ -156,6 +153,9 @@ Game::Game(sf::RenderWindow* hwnd, Input* in, int w, int h)
 
 	//reset the floor tracker for the creation of the next level chunk
 	floorTracker = 0;
+	
+	roomHeight = 6 * 32;
+	roomWidth = buildingWidth * 32;
 
 	//Create the level chunk by looping through each row of the map and adding the appropriate piece
 	//Note: loops 1 less than the base chunk to prevent a floor piece that is 2 blocks thick
@@ -235,17 +235,102 @@ Game::Game(sf::RenderWindow* hwnd, Input* in, int w, int h)
 	player.buildingW = buildingWidth;
 	player.buildingPos = sf::Vector2f(((screenWidth / 2)), (0));
 
-	roomBackTex.loadFromFile("../gfx/Dump tower bottom2.png");
+	roomBackTex.loadFromFile("../gfx/Backgrounds/Dump tower bottom2.png");
 	roomBackObj.setSize(sf::Vector2f(buildingWidth*32, buildingHeight*32));
 	roomBackObj.setTexture(&roomBackTex);
 	roomBackObj.setPosition(sf::Vector2f(((screenWidth / 2) - (buildingWidth / 2) * 32), (0)));
 
 	buildingPosX = (screenWidth / 2) - (buildingWidth / 2) * 32;
 
-	skyBackTex.loadFromFile("../gfx/SkyBack.png");
+	skyBackTex.loadFromFile("../gfx/Backgrounds/SkyBack.png");
 	skyBackObj.setSize(sf::Vector2f(screenWidth, screenHeight));
 	skyBackObj.setTexture(&skyBackTex);
 	skyBackObj.setPosition(sf::Vector2f(0, 0));
+
+
+
+	roomTex1.loadFromFile("../gfx/Backgrounds/Room1.png");
+	roomTex2.loadFromFile("../gfx/Backgrounds/Room2.png");
+	roomTex3.loadFromFile("../gfx/Backgrounds/Room3.png");
+
+
+	room1.setSize(sf::Vector2f(roomWidth, roomHeight));
+	room1.setPosition(sf::Vector2f(buildingPosX, screenHeight - 32 - (roomHeight*3)));
+	room1.setTexture(&roomTex1);
+
+	room2.setSize(sf::Vector2f(roomWidth, roomHeight));
+	room2.setPosition(sf::Vector2f(buildingPosX, screenHeight - 32 - (roomHeight*2)));
+	room2.setTexture(&roomTex2);
+
+	room3.setSize(sf::Vector2f(roomWidth, roomHeight));
+	room3.setPosition(sf::Vector2f(buildingPosX, screenHeight - 32 - (roomHeight*1)));
+	room3.setTexture(&roomTex3);
+	
+	if (!myFont.loadFromFile("../gfx/Fonts/La Tequila.ttf"))
+	{
+		std::printf("Error loading font");
+	}
+
+	sf::Color orange;
+	orange.r = 255;
+	orange.g = 140;
+	orange.b = 0;
+
+
+	AmmoCounter.setString("Ammo:");
+	AmmoCounter.setPosition(sf::Vector2f(10, 37));
+	AmmoCounter.setFont(myFont);
+	AmmoCounter.setFillColor(orange);
+	AmmoCounter.setCharacterSize(8.5);
+
+
+	Health.setString("Health: ");
+	Health.setPosition(sf::Vector2f(5, 15));
+	Health.setFont(myFont);
+	Health.setFillColor(orange);
+	Health.setCharacterSize(8.5);
+
+	Timer.setString("Timer: 1234");
+	Timer.setPosition(sf::Vector2f(screenWidth - 106, 10));
+	Timer.setFont(myFont);
+	Timer.setFillColor(orange);
+	Timer.setCharacterSize(8.5);
+
+	HealthBar.setFillColor(sf::Color::Red);
+	HealthBar.setOutlineColor(sf::Color::Black);
+	HealthBar.setOutlineThickness(1.0f);
+	HealthBar.setPosition(75, 10);
+	HealthBar.setSize(sf::Vector2f(100, 20));
+
+	AmmoBar.setFillColor(sf::Color::Green);
+	AmmoBar.setOutlineColor(sf::Color::Black);
+	AmmoBar.setOutlineThickness(1.0f);
+	AmmoBar.setPosition(75, 31);
+	AmmoBar.setSize(sf::Vector2f(100, 20));
+
+	HealthBarBack.setFillColor(sf::Color(50, 50, 50, 255));
+	HealthBarBack.setOutlineColor(sf::Color::Black);
+	HealthBarBack.setOutlineThickness(1.0f);
+	HealthBarBack.setPosition(75, 10);
+	HealthBarBack.setSize(sf::Vector2f(100, 20));
+
+	AmmoBarBack.setFillColor(sf::Color(50, 50, 50, 255));
+	AmmoBarBack.setOutlineColor(sf::Color::Black);
+	AmmoBarBack.setOutlineThickness(1.0f);
+	AmmoBarBack.setPosition(75, 31);
+	AmmoBarBack.setSize(sf::Vector2f(100, 20));
+
+	UIBack1.setFillColor(sf::Color(200, 200, 200,255));
+	UIBack1.setOutlineColor(sf::Color::Black);
+	UIBack1.setOutlineThickness(1.0f);
+	UIBack1.setPosition(2.5,5);
+	UIBack1.setSize(sf::Vector2f(177.5, 50));
+
+	UIBack2.setFillColor(sf::Color(200, 200, 200, 255));
+	UIBack2.setOutlineColor(sf::Color::Black);
+	UIBack2.setOutlineThickness(1.0f);
+	UIBack2.setPosition(screenWidth - 110, 5);
+	UIBack2.setSize(sf::Vector2f(105, 25));
 
 }
 
@@ -253,51 +338,50 @@ Game::~Game()
 {
 }
 
+void Game::updateUI()
+{
+	HealthBar.setSize(sf::Vector2f(player.health, HealthBar.getSize().y));
+	AmmoBar.setSize(sf::Vector2f(player.currentAmmo * 20, AmmoBar.getSize().y));
+
+	if (HealthBar.getSize().x <= 0)
+	{
+		HealthBar.setSize(sf::Vector2f(1, HealthBar.getSize().y));
+
+	}
+
+	if (AmmoBar.getSize().x <= 0)
+	{
+		AmmoBar.setSize(sf::Vector2f(1, AmmoBar.getSize().y));
+
+	}
+}
 #pragma region GameLoop
 void Game::handleInput(float deltaTime, Input input)
 {
-	//FIXME Transition into the boss fight level
-	/*if (input.isKeyDown(sf::Keyboard::E) && state == GameState::LEVEL && player.getPosition().x > 256 && player.getPosition().x < 320 && player.getPosition().y >32 && player.getPosition().y < 192)
-	{
-		input.setKeyUp(sf::Keyboard::E);
+	player.handleInput(deltaTime);
 
-		state = GameState::BOSS;
-
-	}*/
-
-	if (input.isKeyDown(sf::Keyboard::F) && bullet.getActive() == false)
+	if (input.isKeyDown(sf::Keyboard::M) && enemyTest.isAlive() == false)
 	{
-		input.setKeyUp(sf::Keyboard::F);
-		fireBullet();
-	}
-	else if (input.isKeyDown(sf::Keyboard::G) && bullet.getActive() == true)
-	{
-		bullet.setActive(false);
+		enemyTest.setAlive(true);
+		enemyTest.setPosition(screenWidth / 2, 50);
 	}
 }
 
-void Game::fireBullet()
-{
-	std::printf("Fire! \n");
-	bullet.setPosition(player.getPosition());
-	bullet.direction = player.direction;
-	bullet.setActive(true);
-}
 
 void Game::update(float deltaTime)
 {
-
+	updateUI();
 #pragma region CameraUpdates
 	//Updates camera target position if the player leaves the boundaries of the viewport on the y axis
-	if (player.getPosition().y < (player_view.getCenter().y - (player_view.getSize().y/2)))
+	if (player.getPosition().y < (player_view.getCenter().y - (player_view.getSize().y / 2)))
 	{
 		targetCam = sf::Vector2f(player_view.getCenter().x, player_view.getCenter().y - screenHeight + 32);
 	}
 	else if (player.getPosition().y > (player_view.getCenter().y + (player_view.getSize().y / 2)))
 	{
-		targetCam = sf::Vector2f(player_view.getCenter().x, player_view.getCenter().y + screenHeight -32);
+		targetCam = sf::Vector2f(player_view.getCenter().x, player_view.getCenter().y + screenHeight - 32);
 	}
-	
+
 	//If the camera current position doesnt match the taget position then begin interpolation until target position is reached
 	if (player_view.getCenter() != targetCam)
 	{
@@ -305,9 +389,9 @@ void Game::update(float deltaTime)
 	}
 	//Update the viewport
 	window->setView(player_view);
-	roomBackObj.setPosition(sf::Vector2f(buildingPosX, (player_view.getCenter().y - (player_view.getSize().y/2))));
+	roomBackObj.setPosition(sf::Vector2f(buildingPosX, (player_view.getCenter().y - (player_view.getSize().y / 2))));
 
-	skyBackObj.setPosition(sf::Vector2f(0, player_view.getCenter().y - screenHeight/2));
+	skyBackObj.setPosition(sf::Vector2f(0, player_view.getCenter().y - screenHeight / 2));
 #pragma endregion
 
 
@@ -323,16 +407,18 @@ void Game::update(float deltaTime)
 		player.setPosition(0 + player.getSize().x, player.getPosition().y);
 		player.falling = true;
 	}
-	
+
 	//Update the player
 	player.update(deltaTime);
 
-	enemyTest.update(deltaTime);
-
-
-	if (bullet.getActive())
+	if (enemyTest.isAlive())
 	{
-		bullet.update(deltaTime);
+		enemyTest.update(deltaTime);
+	}
+
+	for(int i = 0; i < player.activeBullets.size(); i++)
+	{
+		player.activeBullets.at(i).update(deltaTime);
 	}
 
 	//FIXME enemy update
@@ -349,11 +435,28 @@ void Game::update(float deltaTime)
 	
 	CheckPlayerCollisionsWithWorld(&player);
 
-	CheckEnemyCollisionsWithWorld(&enemyTest);
-
-	if (checkCollision(&player, &enemyTest))
+	if (enemyTest.isAlive())
 	{
-		player.enemyCollisionResponse(&enemyTest);
+		CheckEnemyCollisionsWithWorld(&enemyTest);
+
+		if (checkCollision(&player, &enemyTest))
+		{
+			player.enemyCollisionResponse(&enemyTest);
+			enemyTest.setAlive(false);
+		}
+
+
+		
+		for (int i = 0; i < player.activeBullets.size(); i++)
+		{			
+			if (player.activeBullets.at(i).getGlobalBounds().intersects(enemyTest.getGlobalBounds()))
+			{
+				std::printf("Hit! \n");
+
+				player.activeBullets.at(i).collisionResponse(&enemyTest);
+				enemyTest.setAlive(false);
+			}
+		}
 	}
 #pragma endregion
 
@@ -361,6 +464,96 @@ void Game::update(float deltaTime)
 
 
 }
+
+
+
+void Game::render()
+{
+
+	beginDraw();
+
+	window->draw(skyBackObj);
+
+	window->draw(baseBackObj);	
+	window->draw(roomBackObj);
+	window->draw(room1);
+	window->draw(room2);
+	window->draw(room3);
+
+
+	ground.render(window);
+
+	buildingBase.render(window);
+	buildingChunkL.render(window);
+	buildingChunkR.render(window);
+
+	window->draw(player);
+
+	if (enemyTest.isAlive())
+	{
+		window->draw(enemyTest);
+	}
+	//FIXME render enemies
+	//for (int i = 0; i < 4; i++)
+	//{
+	//	window->draw(enemy[i]);
+	//}
+	//FIXME player lives render
+	//window->draw(player.life);
+
+	for (int i = 0; i < player.activeBullets.size(); i++)
+	{
+		if (player.activeBullets.at(i).isAlive())
+		{
+			window->draw(player.activeBullets.at(i));
+		}
+	}
+
+	window->draw(UIBack1);
+	window->draw(UIBack2);
+	window->draw(Timer);
+	window->draw(Health);
+	window->draw(AmmoCounter);
+	window->draw(HealthBarBack);
+	window->draw(AmmoBarBack);
+	window->draw(HealthBar);
+	window->draw(AmmoBar);
+
+	endDraw();
+
+}
+
+#pragma endregion
+
+#pragma region UtilityFunctions
+void Game::beginDraw()
+{
+	window->clear(sf::Color::Cyan);
+}
+
+void Game::endDraw()
+{
+	window->display();
+}
+
+// check AABB
+bool Game::checkCollision(Sprite* s1, Sprite* s2)
+{
+	//checks for collision of the right of s1 and the left of s2
+	if (s1->getAABB().left + s1->getAABB().width < s2->getAABB().left)
+		return false;
+	//checks for collision of the left of s1 and the right of s2
+	if (s1->getAABB().left > s2->getAABB().left + s2->getAABB().width)
+		return false;
+	//checks for collision of the bottom os s1 and the top of s2
+	if (s1->getAABB().top + s1->getAABB().height < s2->getAABB().top)
+		return false;
+	//checks for collision of the top of s1 and the bottom of s2
+	if (s1->getAABB().top > s2->getAABB().top + s2->getAABB().height)
+		return false;
+	return true;
+}
+
 
 void Game::CheckPlayerCollisionsWithWorld(Player* p)
 {
@@ -533,7 +726,7 @@ void Game::CheckEnemyCollisionsWithWorld(Enemy* e)
 				e->collisionResponse(&(*buildingB)[i], wall);
 			}
 
-			
+
 		}
 	}
 
@@ -565,7 +758,7 @@ void Game::CheckEnemyCollisionsWithWorld(Enemy* e)
 					e->collisionResponse(&(*buildingCR)[i], wall);
 				}
 
-				
+
 			}
 		}
 	}
@@ -622,74 +815,6 @@ void Game::CheckEnemyCollisionsWithWorld(Enemy* e)
 	{
 		e->falling = true;
 	}
-}
-
-void Game::render()
-{
-
-	beginDraw();
-
-	window->draw(skyBackObj);
-
-	window->draw(baseBackObj);	
-	window->draw(roomBackObj);
-
-
-	ground.render(window);
-
-	buildingBase.render(window);
-	buildingChunkL.render(window);
-	buildingChunkR.render(window);
-
-	window->draw(player);
-	window->draw(enemyTest);
-	//FIXME render enemies
-	//for (int i = 0; i < 4; i++)
-	//{
-	//	window->draw(enemy[i]);
-	//}
-	//FIXME player lives render
-	//window->draw(player.life);
-
-	if (bullet.getActive())
-	{
-		std::printf("Firing! \n");
-		window->draw(bullet);
-	}
-
-	endDraw();
-
-}
-
-#pragma endregion
-
-#pragma region UtilityFunctions
-void Game::beginDraw()
-{
-	window->clear(sf::Color::Cyan);
-}
-
-void Game::endDraw()
-{
-	window->display();
-}
-
-// check AABB
-bool Game::checkCollision(Sprite* s1, Sprite* s2)
-{
-	//checks for collision of the right of s1 and the left of s2
-	if (s1->getAABB().left + s1->getAABB().width < s2->getAABB().left)
-		return false;
-	//checks for collision of the left of s1 and the right of s2
-	if (s1->getAABB().left > s2->getAABB().left + s2->getAABB().width)
-		return false;
-	//checks for collision of the bottom os s1 and the top of s2
-	if (s1->getAABB().top + s1->getAABB().height < s2->getAABB().top)
-		return false;
-	//checks for collision of the top of s1 and the bottom of s2
-	if (s1->getAABB().top > s2->getAABB().top + s2->getAABB().height)
-		return false;
-	return true;
 }
 
 //Setter for the screen width

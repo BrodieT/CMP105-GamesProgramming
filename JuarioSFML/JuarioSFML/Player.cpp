@@ -15,12 +15,13 @@ Player::Player()
 
 	setVelocity(0, 10);
 
-	playerTex.loadFromFile("../gfx/Juario3.png");
+	playerTex.loadFromFile("../gfx/Player/Juario5.png");
 
 	walk.init(0, 0, 32, 32, 2, 0.3f);
-	jump.init(32, 32, 32, 32, 2, 0.2f);
-	idle.init(0, 32, 32, 32, 1, 0.2f);
 
+	jump.init(0, 0, 32, 32, 5, 0.2f);
+	idle.init(0, 0, 32, 32, 5, 0.2f);
+	crouch.init(0, 0, 32, 32, 5, 0.2f);
 
 	currentAnimation = &jump;
 	frame = currentAnimation->getCurrentFrame(direction);
@@ -30,16 +31,51 @@ Player::Player()
 	updateAABB();
 }
 
-void Player::update(float deltaTime)
+void Player::fireBullet()
 {
+	std::printf("Fire! \n");
 
-
-
-	AnimatedSprite::update(deltaTime);
+	Projectile bullet;
 
 	
+	//bullet.setPosition(sf::Vector2f(getPosition().x, getPosition().y + getSize().y / 2));
+
+	//bullet.setSize(target - bullet.getPosition());
+	//bullet.setSize(sf::Vector2f(bullet.getSize().x, 5));
+	
+	////bullet.direction = direction;
+	bullet.setPosition(sf::Vector2f(getPosition().x + (getSize().x/2), getPosition().y + (getSize().y / 3)*2));
+	
+	//float x = pow((target.x - getPosition().x), 2);
+	//float y = pow((target.y - getPosition().y), 2);
+
+	//float distance = sqrtf(x + y);
+
+	//bullet.setSize(sf::Vector2f(distance, 5));
+
+	const float pi = 3.14159265;
+	float dx = bullet.getPosition().x - target.x;
+	float dy = bullet.getPosition().y - target.y;
+
+	float rotation = (atan2(dy, dx)) * 180 / pi;
+	rotation += 180;
+	bullet.setRotation(rotation);
+
+	sf::Vector2f dirVec;
+	dirVec.x = dx;
+	dirVec.y = dy;
+	bullet.dir = dirVec;
+	bullet.setAlive(true);
+
+	activeBullets.push_back(bullet);
 
 
+
+	currentAmmo--;
+}
+
+void Player::handleInput(float deltaTime)
+{
 	//jump
 	if (input->isKeyDown(sf::Keyboard::W) && falling == false)
 	{
@@ -61,8 +97,17 @@ void Player::update(float deltaTime)
 		}
 	}
 
+	//crouch
+	if (input->isKeyDown(sf::Keyboard::S))
+	{
+		isCrouching = true;
+	}
+	else
+	{
+		isCrouching = false;
+	}
 
-
+	//move left/right
 	if (input->isKeyDown(sf::Keyboard::D))
 	{
 		move((150 * deltaTime), 0);
@@ -80,7 +125,34 @@ void Player::update(float deltaTime)
 		isMoving = false;
 	}
 
+	//shoot
+	if (input->isMouseDown() && activeBullets.size() < maxAmmo)
+	{
+		input->setMouseDown(false);
+		target.x = input->getMouseX();
+		target.y = input->getMouseY();
+		fireBullet();
+	}
 
+	//Reload
+	if (input->isKeyDown(sf::Keyboard::R))
+	{
+		currentAmmo = 5;
+		activeBullets.clear();
+	}
+
+}
+void Player::update(float deltaTime)
+{
+
+
+
+	AnimatedSprite::update(deltaTime);
+
+	
+
+
+	
 	//gravity
 	if (falling)
 	{
@@ -104,6 +176,10 @@ void Player::update(float deltaTime)
 		currentAnimation = &walk;
 		//std::printf("Walk");
 	}
+	else if (isCrouching)
+	{
+		currentAnimation = &crouch;
+	}
 	else
 	{
 		currentAnimation = &idle;
@@ -119,7 +195,15 @@ void Player::update(float deltaTime)
 
 		if (currentAnimation == &jump)
 		{
-			currentAnimation->setFrame(1);
+			currentAnimation->setFrame(3);
+		}
+		else if(currentAnimation == &idle)
+		{
+			currentAnimation->setFrame(2);
+		}
+		else if (currentAnimation == &crouch)
+		{
+			currentAnimation->setFrame(4);
 		}
 
 		setTextureRect(currentAnimation->getCurrentFrame(direction));
@@ -213,4 +297,5 @@ void Player::enemyCollisionResponse(Sprite* e)
 	sf::Vector2f force((getPosition().x +getSize().x/2) - (e->getPosition().x + e->getSize().x/2), -5);
 	velocity = force * (scale / 5);
 	falling = true;
+	health -= 20;
 }

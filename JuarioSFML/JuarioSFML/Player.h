@@ -3,6 +3,7 @@
 #include "Input.h"
 #include "Animation.h"
 #include "Enemy.h"
+#include "Projectile.h"
 
 class Player : public AnimatedSprite
 {
@@ -13,11 +14,17 @@ public:
 	void update(float deltaTime);
 	void collisionResponse(Sprite* sp, int wall);
 	void enemyCollisionResponse(Sprite* e);
-	void LoseLife(int lives);
-	void UpdateLife(int lives);
+	void handleInput(float deltaTime);
+	void fireBullet();
+
+	sf::Vector2f target;
 
 	sf::Texture playerTex;
 	sf::Texture utilityTex;
+
+	std::vector<Projectile> activeBullets;
+//	std::vector<Projectile> bullets;
+
 
 	int buildingW = 0;
 	sf::Vector2f buildingPos;
@@ -31,10 +38,16 @@ public:
 	int lives = 3;
 
 	bool isMoving = false;
-	
+	bool isCrouching = false;
+
+	int maxAmmo = 25;
+	int currentAmmo = 25;
+
+	int health = 100;
 
 protected:
 	Animation walk;
+	Animation crouch;
 	Animation jump;
 	Animation idle;
 	Animation* currentAnimation;
