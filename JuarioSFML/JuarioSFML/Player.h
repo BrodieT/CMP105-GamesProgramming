@@ -32,7 +32,7 @@ public:
 	Input* input;
 	float scale;
 	float gravity;
-	bool falling;
+	//bool falling;
 	int width = getSize().x;
 	int height = getSize().y;
 	int lives = 3;

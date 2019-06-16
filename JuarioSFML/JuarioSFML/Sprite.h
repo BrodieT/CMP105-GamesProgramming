@@ -12,11 +12,12 @@ public:
 	sf::FloatRect getAABB();
 	virtual void updateAABB();
 	virtual void collisionResponse();
-
+	virtual void collideWithWorld(Sprite* s, int w) {};
 	void setAlive(bool live);
 	bool isAlive();
 
 	int direction;
+	bool falling;
 
 protected:
 	sf::Vector2f velocity;

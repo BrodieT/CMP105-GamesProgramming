@@ -10,8 +10,8 @@ public:
 
 	void update(float deltaTime);
 	void collisionResponse(Sprite* sp, int wall);
-
-	bool falling = true;
+	void collideWithWorld(Sprite* sp, int wall);
+//	bool falling = true;
 	float gravity;
 	float scale;
 	int width = getSize().x;

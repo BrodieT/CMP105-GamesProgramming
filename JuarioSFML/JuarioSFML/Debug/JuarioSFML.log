@@ -129,5 +129,34 @@ c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(344)
 c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(366): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(419): warning C4018: '<': signed/unsigned mismatch
 c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(450): warning C4018: '<': signed/unsigned mismatch
-c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(516): warning C4018: '<': signed/unsigned mismatch
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(463): warning C4018: '<': signed/unsigned mismatch
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(510): warning C4018: '<': signed/unsigned mismatch
+  JuarioSFML.cpp
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\enemy.h(17): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\enemy.h(18): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\player.h(36): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\player.h(37): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\juariosfml.cpp(11): warning C4326: return type of 'main' should be 'int' instead of 'void'
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\juariosfml.cpp(43): warning C4244: 'argument': conversion from 'unsigned int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Generating Code...
   JuarioSFML.vcxproj -> C:\Users\templ\OneDrive\Documents\JuarioSFML\JuarioSFML\Debug\JuarioSFML.exe

@@ -34,9 +34,6 @@ public:
 
 	void fireBullet();
 
-
-	void CheckEnemyCollisionsWithWorld(Enemy* e);
-
 	GameState getState();
 	
 	sf::Vector2f Interpolate(const sf::Vector2f& pointA, const sf::Vector2f& pointB, float factor);
@@ -45,6 +42,7 @@ public:
 	void setScreenHeight(int y);
 
 	bool checkCollision(Sprite* s1, Sprite* s2);
+	void CheckCollisionsWithWorld(Sprite* e);
 
 
 	void updateUI();

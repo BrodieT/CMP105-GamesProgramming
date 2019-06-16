@@ -128,4 +128,76 @@ void Enemy::collisionResponse(Sprite* sp, int wall)
 		}
 	}
 
+
+
+}
+	void Enemy::collideWithWorld(Sprite* sp, int wall)
+	{
+
+		sf::Vector2f collide(getPosition().x - sp->getPosition().x, getPosition().y - sp->getPosition().y);
+
+		if (wall == 0)
+		{
+			if (abs(collide.x) > abs(collide.y))
+			{
+
+				if (collide.x < -5)
+				{
+					falling = true;
+
+					//right side
+					setPosition(getPosition().x, sp->getPosition().y - getSize().y);
+					velocity.y = 0;
+					//direction *= -1.0f;
+
+				}
+				if (collide.x > 5)
+				{
+					//left side
+					setPosition(getPosition().x, sp->getPosition().y - getSize().y);
+					velocity.y = 0;
+					//direction *= -1.0f;
+				}
+			}
+			else if (abs(collide.x) < abs(collide.y))
+			{
+				//top side
+				if (collide.y < -5)
+				{
+					/*if (abs(collide.x) < abs(collide.y))
+					{*/
+					falling = false;
+					//}
+					setPosition(getPosition().x, sp->getPosition().y - getSize().y);
+					//velocity.y = 0;
+
+				}
+				//bottom side
+				if (collide.y > 5)
+				{
+					setPosition(getPosition().x, sp->getPosition().y + getSize().y);
+					velocity.y = 0;
+				}
+			}
+
+		}
+		else
+		{
+			if (collide.x < -5)
+			{
+				falling = true;
+
+				//right side
+				setPosition(sp->getPosition().x - (getSize().x), getPosition().y);
+				direction = -1;
+			}
+			if (collide.x > 5)
+			{
+				//left side
+				falling = true;
+				setPosition(sp->getPosition().x + sp->getSize().x + 1, getPosition().y);
+				direction = 1;
+
+			}
+		}
 }

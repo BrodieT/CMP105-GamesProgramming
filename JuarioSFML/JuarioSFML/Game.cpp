@@ -437,7 +437,7 @@ void Game::update(float deltaTime)
 
 	if (enemyTest.isAlive())
 	{
-		CheckEnemyCollisionsWithWorld(&enemyTest);
+		CheckCollisionsWithWorld(&enemyTest);
 
 		if (checkCollision(&player, &enemyTest))
 		{
@@ -448,19 +448,25 @@ void Game::update(float deltaTime)
 
 		
 		for (int i = 0; i < player.activeBullets.size(); i++)
-		{			
+		{	
 			if (player.activeBullets.at(i).getGlobalBounds().intersects(enemyTest.getGlobalBounds()))
 			{
 				std::printf("Hit! \n");
 
 				player.activeBullets.at(i).collisionResponse(&enemyTest);
 				enemyTest.setAlive(false);
-			}
+			}			
 		}
 	}
 #pragma endregion
 
-
+	for (int i = 0; i < player.activeBullets.size(); i++)
+	{
+		if (player.activeBullets.at(i).isAlive())
+		{
+			player.activeBullets.at(i).CheckCollisionWithWorld(buildingBase.getLevel(), buildingChunkR.getLevel(), buildingChunkL.getLevel(), buildingBase.getTileMap(), buildingChunkL.getTileMap(), buildingChunkR.getTileMap(), ground.getLevel());
+		}
+	}
 
 
 }
@@ -686,7 +692,10 @@ void Game::CheckPlayerCollisionsWithWorld(Player* p)
 	}
 }
 
-void Game::CheckEnemyCollisionsWithWorld(Enemy* e)
+
+
+
+void Game::CheckCollisionsWithWorld(Sprite* e)
 {
 	//Tracks if a collision is detected
 	bool collide = false;
@@ -723,7 +732,7 @@ void Game::CheckEnemyCollisionsWithWorld(Enemy* e)
 
 				collide = true;
 
-				e->collisionResponse(&(*buildingB)[i], wall);
+				e->collideWithWorld(&(*buildingB)[i], wall);
 			}
 
 
@@ -755,7 +764,7 @@ void Game::CheckEnemyCollisionsWithWorld(Enemy* e)
 
 					collide = true;
 
-					e->collisionResponse(&(*buildingCR)[i], wall);
+					e->collideWithWorld(&(*buildingCR)[i], wall);
 				}
 
 
@@ -787,7 +796,7 @@ void Game::CheckEnemyCollisionsWithWorld(Enemy* e)
 
 					collide = true;
 
-					e->collisionResponse(&(*buildingCL)[i], wall);
+					e->collideWithWorld(&(*buildingCL)[i], wall);
 				}
 			}
 		}
@@ -804,7 +813,7 @@ void Game::CheckEnemyCollisionsWithWorld(Enemy* e)
 			if (checkCollision(e, &(*gTile)[i]))
 			{
 				collide = true;
-				e->collisionResponse(&(*gTile)[i], 0);
+				e->collideWithWorld(&(*gTile)[i], 0);
 			}
 		}
 	}
