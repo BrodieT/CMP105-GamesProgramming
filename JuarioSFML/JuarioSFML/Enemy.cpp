@@ -29,6 +29,11 @@ Enemy::Enemy()
 void Enemy::update(float deltaTime)
 {
 
+	if (getPosition().x <= boundaryLeft || getPosition().x >= boundaryRight)
+	{
+		direction *= -1;
+	}
+
 	velocity.x = (scale *direction);
 
 	if (falling)

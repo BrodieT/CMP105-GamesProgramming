@@ -227,9 +227,6 @@ Game::Game(sf::RenderWindow* hwnd, Input* in, int w, int h)
 	player.setPosition(5, screenHeight - 400);
 	player.input = input;
 
-	//Init enemy character
-	enemyTest.setPosition(screenWidth / 2, 50);
-
 
 
 	player.buildingW = buildingWidth;
@@ -332,6 +329,44 @@ Game::Game(sf::RenderWindow* hwnd, Input* in, int w, int h)
 	UIBack2.setPosition(screenWidth - 110, 5);
 	UIBack2.setSize(sf::Vector2f(105, 25));
 
+
+	std::printf("Floors %i", buildingHeight);
+
+	float position = screenHeight - 35;
+	float increment = 6 * 32;
+	position += increment;
+	float x = screenWidth / 2;
+	float y = position;
+
+	enemyTemplate.boundaryLeft = buildingPosX;
+	enemyTemplate.boundaryRight = enemyTemplate.boundaryLeft + (buildingWidth * 32);
+
+	int d = 0;
+	
+	for (int i = 0; i < 3; i++)
+	{
+		x = (std::rand() % (buildingWidth * 32)) + buildingPosX;
+		y -= increment;
+
+		enemyTemplate.setPosition(x, y);
+		enemyTemplate.setAlive(true);
+		d = (std::rand() % 2);
+
+		if (d == 0)
+		{
+			enemyTemplate.direction = -1;
+		}
+		else
+		{
+			enemyTemplate.direction = 1;
+		}
+
+		enemies.push_back(enemyTemplate);
+	}
+
+	
+
+
 }
 
 Game::~Game()
@@ -360,11 +395,11 @@ void Game::handleInput(float deltaTime, Input input)
 {
 	player.handleInput(deltaTime);
 
-	if (input.isKeyDown(sf::Keyboard::M) && enemyTest.isAlive() == false)
+	/*if (input.isKeyDown(sf::Keyboard::M) && enemyTest.isAlive() == false)
 	{
 		enemyTest.setAlive(true);
 		enemyTest.setPosition(screenWidth / 2, 50);
-	}
+	}*/
 }
 
 
@@ -411,23 +446,22 @@ void Game::update(float deltaTime)
 	//Update the player
 	player.update(deltaTime);
 
-	if (enemyTest.isAlive())
+
+	for (int i = 0; i < enemies.size(); i++)
 	{
-		enemyTest.update(deltaTime);
+		if (enemies.at(i).isAlive())
+		{
+			enemies.at(i).update(deltaTime);
+		}
 	}
+	
 
 	for(int i = 0; i < player.activeBullets.size(); i++)
 	{
 		player.activeBullets.at(i).update(deltaTime);
 	}
 
-	//FIXME enemy update
-/*
-	for (int i = 0; i < 4; i++)
-	{
-		enemy[i].update(deltaTime);
-	}
-*/
+
 
 #pragma endregion
 
@@ -435,27 +469,31 @@ void Game::update(float deltaTime)
 	
 	CheckPlayerCollisionsWithWorld(&player);
 
-	if (enemyTest.isAlive())
+	for (int j = 0; j < enemies.size(); j++)
 	{
-		CheckCollisionsWithWorld(&enemyTest);
-
-		if (checkCollision(&player, &enemyTest))
+		if (enemies.at(j).isAlive())
 		{
-			player.enemyCollisionResponse(&enemyTest);
-			enemyTest.setAlive(false);
-		}
+			CheckCollisionsWithWorld(&enemies.at(j));
 
-
-		
-		for (int i = 0; i < player.activeBullets.size(); i++)
-		{	
-			if (player.activeBullets.at(i).getGlobalBounds().intersects(enemyTest.getGlobalBounds()))
+			if (checkCollision(&player, &enemies.at(j)))
 			{
-				std::printf("Hit! \n");
+				player.enemyCollisionResponse(&enemies.at(j));
+				enemies.at(j).setAlive(false);
+			}
 
-				player.activeBullets.at(i).collisionResponse(&enemyTest);
-				enemyTest.setAlive(false);
-			}			
+
+
+			for (int i = 0; i < player.activeBullets.size(); i++)
+			{
+				if (player.activeBullets.at(i).getGlobalBounds().intersects(enemies.at(j).getGlobalBounds()))
+				{
+					std::printf("Hit! \n");
+
+					player.activeBullets.at(i).collisionResponse(&enemies.at(j));
+					player.activeBullets.erase(player.activeBullets.begin() + i);
+					enemies.at(j).setAlive(false);
+				}
+			}
 		}
 	}
 #pragma endregion
@@ -495,17 +533,15 @@ void Game::render()
 
 	window->draw(player);
 
-	if (enemyTest.isAlive())
+	for (int k = 0; k < enemies.size(); k++)
 	{
-		window->draw(enemyTest);
+		if (enemies.at(k).isAlive())
+		{
+			window->draw(enemies.at(k));
+		}
 	}
-	//FIXME render enemies
-	//for (int i = 0; i < 4; i++)
-	//{
-	//	window->draw(enemy[i]);
-	//}
-	//FIXME player lives render
-	//window->draw(player.life);
+
+	
 
 	for (int i = 0; i < player.activeBullets.size(); i++)
 	{

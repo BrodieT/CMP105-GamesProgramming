@@ -20,7 +20,8 @@ public:
 	sf::Texture texture;
 
 	//int direction = 1;
-
+	float boundaryLeft = 0;
+	float boundaryRight = 0;
 	sf::Vector2f new_pos;
 	sf::Vector2f position;
 

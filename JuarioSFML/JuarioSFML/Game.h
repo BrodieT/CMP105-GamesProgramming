@@ -52,6 +52,9 @@ private:
 	sf::RenderWindow* window;
 	Input* input;
 
+	std::vector<Enemy> enemies;
+	Enemy enemyTemplate;
+
 	//Viewport object (camera)
 	sf::View player_view;
 
@@ -111,8 +114,7 @@ private:
 	sf::RectangleShape UIBack2;
 	sf::Text Timer;
 
-	//FIXME enemies array
-	Enemy enemyTest;
+	
 
 	//Tracks the current gamestate
 	GameState state;
