@@ -52,3 +52,9 @@ int Input::getMouseY()
 {
 	return mouse.y;
 }
+
+sf::Vector2f Input::getMouseCoords(sf::RenderWindow* win)
+{
+	sf::Vector2i MouseCoords = sf::Mouse::getPosition(*win);
+	return win->mapPixelToCoords(MouseCoords);
+}

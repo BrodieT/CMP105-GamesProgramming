@@ -19,6 +19,7 @@ public:
 
 	sf::Texture texture;
 
+	bool onScreen = false;
 	//int direction = 1;
 	float boundaryLeft = 0;
 	float boundaryRight = 0;

@@ -1,4 +1,6 @@
 #pragma once
+#include <SFML/Graphics.hpp>
+
 class Input
 {
 private:
@@ -19,6 +21,7 @@ public:
 	void setMousePosition(int lx, int ly);
 	void setMouseDown(bool click);
 
+	sf::Vector2f getMouseCoords(sf::RenderWindow* win);
 	int getMouseX();
 	int getMouseY();
 

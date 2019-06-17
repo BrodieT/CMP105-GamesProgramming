@@ -7,7 +7,7 @@ Projectile::Projectile()
 	setSize(sf::Vector2f(10, 7));
 	setPosition(0, 0);
 	setAlive(false);
-	scale = 0.01;
+	scale = 400.0f;
 	setFillColor(sf::Color::Red);
 	setSize(sf::Vector2f(10, 5));
 }
@@ -21,7 +21,7 @@ void Projectile::update(float deltaTime)
 {	
 	velocity.x = scale * dir.x * -1;
 	velocity.y = scale * dir.y * -1;
-	move(velocity);	
+	move(velocity*deltaTime);	
 }
 
 void Projectile::collisionResponse(Sprite* sp)
@@ -36,7 +36,7 @@ void Projectile::collisionResponse(Sprite* sp, int x)
 }
 
 
-void Projectile::CheckCollisionWithWorld(std::vector<Tile>* buildingB, std::vector<Tile>* buildingCR, std::vector<Tile>* buildingCL, std::vector<int>* buildingBInt, std::vector<int>* buildingCLInt, std::vector<int>* buildingCRInt, std::vector<Tile>* gTile)
+bool Projectile::CheckCollisionWithWorld(std::vector<Tile>* buildingB, std::vector<Tile>* buildingCR, std::vector<Tile>* buildingCL, std::vector<int>* buildingBInt, std::vector<int>* buildingCLInt, std::vector<int>* buildingCRInt, std::vector<Tile>* gTile)
 {
 	for (int i = 0; i < (int)buildingB->size(); i++)
 	{
@@ -46,6 +46,7 @@ void Projectile::CheckCollisionWithWorld(std::vector<Tile>* buildingB, std::vect
 			if (getGlobalBounds().intersects((*buildingB)[i].getGlobalBounds()))
 			{
 				setAlive(false);
+				return true;
 			}
 		}
 	}
@@ -63,6 +64,7 @@ void Projectile::CheckCollisionWithWorld(std::vector<Tile>* buildingB, std::vect
 				if (getGlobalBounds().intersects((*buildingCR)[i].getGlobalBounds()))
 				{
 					setAlive(false);
+					return true;
 				}
 			}
 		}
@@ -80,6 +82,7 @@ void Projectile::CheckCollisionWithWorld(std::vector<Tile>* buildingB, std::vect
 				if (getGlobalBounds().intersects((*buildingCL)[i].getGlobalBounds()))
 				{
 					setAlive(false);
+					return true;
 				}
 			}
 		}
@@ -95,10 +98,12 @@ void Projectile::CheckCollisionWithWorld(std::vector<Tile>* buildingB, std::vect
 			if(getGlobalBounds().intersects((*gTile)[i].getGlobalBounds()))
 			{
 				setAlive(false);
+				return true;
 			}
 		}
 	}
 
+	return false;
 
 }
 

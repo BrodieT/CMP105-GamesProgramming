@@ -330,7 +330,6 @@ Game::Game(sf::RenderWindow* hwnd, Input* in, int w, int h)
 	UIBack2.setSize(sf::Vector2f(105, 25));
 
 
-	std::printf("Floors %i", buildingHeight);
 
 	float position = screenHeight - 35;
 	float increment = 6 * 32;
@@ -343,7 +342,7 @@ Game::Game(sf::RenderWindow* hwnd, Input* in, int w, int h)
 
 	int d = 0;
 	
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < buildingHeight; i++)
 	{
 		x = (std::rand() % (buildingWidth * 32)) + buildingPosX;
 		y -= increment;
@@ -389,22 +388,61 @@ void Game::updateUI()
 		AmmoBar.setSize(sf::Vector2f(1, AmmoBar.getSize().y));
 
 	}
+
+	
+
+	AmmoCounter.setPosition(sf::Vector2f((player_view.getCenter().x - (player_view.getSize().x / 2)) + 10, (player_view.getCenter().y - (player_view.getSize().y / 2)) + 37));
+	Health.setPosition(sf::Vector2f((player_view.getCenter().x - (player_view.getSize().x / 2)) + 5, (player_view.getCenter().y - (player_view.getSize().y / 2)) + 15));
+	Timer.setPosition(sf::Vector2f((player_view.getCenter().x + (player_view.getSize().x / 2)) - 106, (player_view.getCenter().y - (player_view.getSize().y / 2)) + 10));
+	HealthBar.setPosition((player_view.getCenter().x - (player_view.getSize().x / 2)) + 75, (player_view.getCenter().y - (player_view.getSize().y / 2)) + 10);
+	AmmoBar.setPosition((player_view.getCenter().x - (player_view.getSize().x / 2)) + 75, (player_view.getCenter().y - (player_view.getSize().y / 2)) + 31);
+	HealthBarBack.setPosition((player_view.getCenter().x - (player_view.getSize().x / 2)) + 75, (player_view.getCenter().y - (player_view.getSize().y / 2)) + 10);
+	AmmoBarBack.setPosition((player_view.getCenter().x - (player_view.getSize().x / 2)) + 75, (player_view.getCenter().y - (player_view.getSize().y / 2)) + 31);
+	UIBack1.setPosition((player_view.getCenter().x - (player_view.getSize().x / 2)) + 2.5, (player_view.getCenter().y - (player_view.getSize().y / 2)) + 5);
+	UIBack2.setPosition((player_view.getCenter().x + (player_view.getSize().x / 2)) - 110, (player_view.getCenter().y - (player_view.getSize().y / 2)) + 5);
+
+
 }
 #pragma region GameLoop
 void Game::handleInput(float deltaTime, Input input)
 {
 	player.handleInput(deltaTime);
-
-	/*if (input.isKeyDown(sf::Keyboard::M) && enemyTest.isAlive() == false)
-	{
-		enemyTest.setAlive(true);
-		enemyTest.setPosition(screenWidth / 2, 50);
-	}*/
 }
 
 
 void Game::update(float deltaTime)
 {
+	player.viewCentre = player_view.getCenter();
+	player.viewSize = player_view.getSize();
+
+	//sf::Vector2i MouseCoords = sf::Mouse::getPosition(*window);
+	//player.target = window->mapPixelToCoords(MouseCoords);
+
+	player.target = input->getMouseCoords(window);
+
+	float left = player_view.getCenter().x - (player_view.getSize().x / 2);
+	float right = player_view.getCenter().x + (player_view.getSize().x / 2);
+	float top = player_view.getCenter().y - (player_view.getSize().y / 2);
+	float bottom = player_view.getCenter().y + (player_view.getSize().y / 2);
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		if (enemies.at(i).getPosition().x > left && enemies.at(i).getPosition().x < right)
+		{
+			if (enemies.at(i).getPosition().y > top && enemies.at(i).getPosition().y < bottom)
+			{
+				enemies.at(i).onScreen = true;
+			}
+			else
+			{
+				enemies.at(i).onScreen = false;
+			}
+		}
+		else
+		{
+			enemies.at(i).onScreen = false;
+		}
+	}
+
 	updateUI();
 #pragma region CameraUpdates
 	//Updates camera target position if the player leaves the boundaries of the viewport on the y axis
@@ -449,7 +487,7 @@ void Game::update(float deltaTime)
 
 	for (int i = 0; i < enemies.size(); i++)
 	{
-		if (enemies.at(i).isAlive())
+		if (enemies.at(i).isAlive() && enemies.at(i).onScreen)
 		{
 			enemies.at(i).update(deltaTime);
 		}
@@ -471,7 +509,7 @@ void Game::update(float deltaTime)
 
 	for (int j = 0; j < enemies.size(); j++)
 	{
-		if (enemies.at(j).isAlive())
+		if (enemies.at(j).isAlive() && enemies.at(j).onScreen)
 		{
 			CheckCollisionsWithWorld(&enemies.at(j));
 
@@ -487,8 +525,6 @@ void Game::update(float deltaTime)
 			{
 				if (player.activeBullets.at(i).getGlobalBounds().intersects(enemies.at(j).getGlobalBounds()))
 				{
-					std::printf("Hit! \n");
-
 					player.activeBullets.at(i).collisionResponse(&enemies.at(j));
 					player.activeBullets.erase(player.activeBullets.begin() + i);
 					enemies.at(j).setAlive(false);
@@ -496,16 +532,19 @@ void Game::update(float deltaTime)
 			}
 		}
 	}
-#pragma endregion
+
 
 	for (int i = 0; i < player.activeBullets.size(); i++)
 	{
 		if (player.activeBullets.at(i).isAlive())
 		{
-			player.activeBullets.at(i).CheckCollisionWithWorld(buildingBase.getLevel(), buildingChunkR.getLevel(), buildingChunkL.getLevel(), buildingBase.getTileMap(), buildingChunkL.getTileMap(), buildingChunkR.getTileMap(), ground.getLevel());
+			if (player.activeBullets.at(i).CheckCollisionWithWorld(buildingBase.getLevel(), buildingChunkR.getLevel(), buildingChunkL.getLevel(), buildingBase.getTileMap(), buildingChunkL.getTileMap(), buildingChunkR.getTileMap(), ground.getLevel()))
+			{
+				player.activeBullets.erase(player.activeBullets.begin() + i);
+			}
 		}
 	}
-
+#pragma endregion
 
 }
 
@@ -535,7 +574,7 @@ void Game::render()
 
 	for (int k = 0; k < enemies.size(); k++)
 	{
-		if (enemies.at(k).isAlive())
+		if (enemies.at(k).isAlive() && enemies.at(k).onScreen)
 		{
 			window->draw(enemies.at(k));
 		}

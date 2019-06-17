@@ -33,25 +33,11 @@ Player::Player()
 
 void Player::fireBullet()
 {
-	std::printf("Fire! \n");
-
 	Projectile bullet;
 
 	
-	//bullet.setPosition(sf::Vector2f(getPosition().x, getPosition().y + getSize().y / 2));
-
-	//bullet.setSize(target - bullet.getPosition());
-	//bullet.setSize(sf::Vector2f(bullet.getSize().x, 5));
-	
-	////bullet.direction = direction;
 	bullet.setPosition(sf::Vector2f(getPosition().x + (getSize().x/2), getPosition().y + (getSize().y / 3)*2));
 	
-	//float x = pow((target.x - getPosition().x), 2);
-	//float y = pow((target.y - getPosition().y), 2);
-
-	//float distance = sqrtf(x + y);
-
-	//bullet.setSize(sf::Vector2f(distance, 5));
 
 	const float pi = 3.14159265;
 	float dx = bullet.getPosition().x - target.x;
@@ -64,7 +50,18 @@ void Player::fireBullet()
 	sf::Vector2f dirVec;
 	dirVec.x = dx;
 	dirVec.y = dy;
-	bullet.dir = dirVec;
+
+	float length = sqrt((dirVec.x *dirVec.x) + (dirVec.y*dirVec.y));
+
+	if (length != 0)
+	{
+		bullet.dir = sf::Vector2f(dirVec.x / length, dirVec.y / length);
+	}
+	else
+	{
+		bullet.dir = dirVec;
+	}
+
 	bullet.setAlive(true);
 
 	activeBullets.push_back(bullet);
@@ -129,8 +126,8 @@ void Player::handleInput(float deltaTime)
 	if (input->isMouseDown() && activeBullets.size() < maxAmmo)
 	{
 		input->setMouseDown(false);
-		target.x = input->getMouseX();
-		target.y = input->getMouseY();
+
+		
 		fireBullet();
 	}
 

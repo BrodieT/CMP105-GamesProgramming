@@ -9,7 +9,7 @@ Boss::Boss(sf::RenderWindow* hwnd, Input* in)
 	//store pointer to window and input class
 	window = hwnd;
 	input = in;
-	boss.loadFromFile("../gfx/Dump tower top1.png");
+	boss.loadFromFile("../gfx/Backgrounds/Dump tower top1.png");
 
 	background.setTexture(&boss);
 	background.setSize(sf::Vector2f(1300, 800));
@@ -20,7 +20,7 @@ Boss::Boss(sf::RenderWindow* hwnd, Input* in)
 
 
 
-	texture.loadFromFile("../gfx/Juario.png");
+	texture.loadFromFile("../gfx/Player/Juario.png");
 
 	player.setSize(sf::Vector2f(50, 60));
 	player.setTexture(&texture);
@@ -31,7 +31,7 @@ Boss::Boss(sf::RenderWindow* hwnd, Input* in)
 
 
 
-	level.loadTexture("../gfx/Tiles1.png");
+	level.loadTexture("../gfx/Backgrounds/Tiles1.png");
 	Tile tile;
 	std::vector<Tile> tiles;
 	for (int i = 0; i < 7; i++)

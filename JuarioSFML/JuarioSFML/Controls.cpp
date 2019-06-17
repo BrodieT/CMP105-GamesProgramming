@@ -9,7 +9,7 @@ Controls::Controls(sf::RenderWindow* hwnd, Input* in)
 	//store pointer to window and input class
 	window = hwnd;
 	input = in;
-	controls.loadFromFile("../gfx/CONTROLS.png");
+	controls.loadFromFile("../gfx/Backgrounds/CONTROLS.png");
 
 	background.setTexture(&controls);
 	background.setSize(sf::Vector2f(1300, 900));

@@ -19,6 +19,9 @@ public:
 
 	sf::Vector2f target;
 
+	sf::Vector2f viewCentre;
+	sf::Vector2f viewSize;
+
 	sf::Texture playerTex;
 	sf::Texture utilityTex;
 
