@@ -44,9 +44,16 @@ public:
 	bool checkCollision(Sprite* s1, Sprite* s2);
 	void CheckCollisionsWithWorld(Sprite* e);
 
+	void MoveCam(bool up);
+	void MoveRooms();
+
+
 
 	void updateUI();
 private:
+
+	bool movingCam = false;
+
 
 	//render window pointer and input class
 	sf::RenderWindow* window;
@@ -92,6 +99,9 @@ private:
 	sf::Texture roomTex1;
 	sf::Texture roomTex2;
 	sf::Texture roomTex3;
+
+	std::vector<sf::Texture> roomTex;
+	std::vector<sf::RectangleShape> rooms;
 
 	sf::RectangleShape room1;
 	sf::RectangleShape room2;

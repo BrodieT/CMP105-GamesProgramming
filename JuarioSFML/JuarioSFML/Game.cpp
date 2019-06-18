@@ -47,7 +47,7 @@ Game::Game(sf::RenderWindow* hwnd, Input* in, int w, int h)
 	//Setup the tilemap
 	Tile tile;
 	std::vector<Tile> tiles;
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 13; i++)
 	{
 		tile.setSize(sf::Vector2f(32, 32));
 		tile.setAlive(true);
@@ -67,6 +67,10 @@ Game::Game(sf::RenderWindow* hwnd, Input* in, int w, int h)
 	tiles[7].setTextureRect(sf::IntRect(0, 34, 16, 16));
 	tiles[8].setTextureRect(sf::IntRect(17, 34, 16, 16)); //
 	tiles[9].setTextureRect(sf::IntRect(34, 34, 16, 16));
+
+	tiles[10].setTextureRect(sf::IntRect(0, 51, 16, 16));
+	tiles[11].setTextureRect(sf::IntRect(17, 51, 16, 16)); //
+	tiles[12].setTextureRect(sf::IntRect(34, 51, 16, 16));
 	
 	//Set the tileset of each of the level components
 	buildingBase.setTileSet(tiles);
@@ -92,11 +96,12 @@ Game::Game(sf::RenderWindow* hwnd, Input* in, int w, int h)
 
 #pragma region FillTileMaps
 	//Vectors to store each possible row in the building map components to be added dynamically
-	std::vector<int> FloorLeftOpening = { 8, 0, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 8 };
-	std::vector<int> FloorRightOpening = { 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 8 };
+	std::vector<int> FloorLeftOpening = { 8, 0, 0, 7, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1 };
+	std::vector<int> FloorRightOpening = { 3, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 0, 0, 8 };
 	std::vector<int> Wall = { 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8 };
 	std::vector<int> Door = { 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-	std::vector<int> Floor = { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 };
+	std::vector<int> DoorFrame = { 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9 };
+	std::vector<int> Floor = { 10, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4 };
 
 	//Tracks which floor is to be placed
 	int floorTracker = 0;
@@ -119,6 +124,13 @@ Game::Game(sf::RenderWindow* hwnd, Input* in, int w, int h)
 			for (int j = 0; j < buildingWidth; j++)
 			{
 				baseBuildMp.insert(baseBuildMp.begin(), Door.at(j));
+			}
+		}
+		else if (i == 5)
+		{
+			for (int j = 0; j < buildingWidth; j++)
+			{
+				baseBuildMp.insert(baseBuildMp.begin(), DoorFrame.at(j));
 			}
 		}//Every six rows in the map, add a floor piece
 		else if (i % 6 == 0)
@@ -250,18 +262,34 @@ Game::Game(sf::RenderWindow* hwnd, Input* in, int w, int h)
 	roomTex2.loadFromFile("../gfx/Backgrounds/Room2.png");
 	roomTex3.loadFromFile("../gfx/Backgrounds/Room3.png");
 
+	roomTex.push_back(roomTex1);
+	roomTex.push_back(roomTex2);
+	roomTex.push_back(roomTex3);
+
+	int a = (rand() % 3);
+
+	for (int i = 0; i < 3; i++)
+	{
+		a = (rand() % 3);
+
+		room1.setSize(sf::Vector2f(roomWidth, roomHeight));
+		room1.setPosition(sf::Vector2f(buildingPosX, screenHeight - 32 - (roomHeight * (i +1))));
+		room1.setTexture(&roomTex.at(a));
+
+		rooms.push_back(room1);
+	}
 
 	room1.setSize(sf::Vector2f(roomWidth, roomHeight));
 	room1.setPosition(sf::Vector2f(buildingPosX, screenHeight - 32 - (roomHeight*3)));
-	room1.setTexture(&roomTex1);
-
+	room1.setTexture(&roomTex.at(a));
+	a = (rand() % 3);
 	room2.setSize(sf::Vector2f(roomWidth, roomHeight));
 	room2.setPosition(sf::Vector2f(buildingPosX, screenHeight - 32 - (roomHeight*2)));
-	room2.setTexture(&roomTex2);
-
+	room2.setTexture(&roomTex.at(a));
+	a = (rand() % 3);
 	room3.setSize(sf::Vector2f(roomWidth, roomHeight));
 	room3.setPosition(sf::Vector2f(buildingPosX, screenHeight - 32 - (roomHeight*1)));
-	room3.setTexture(&roomTex3);
+	room3.setTexture(&roomTex.at(a));
 	
 	if (!myFont.loadFromFile("../gfx/Fonts/La Tequila.ttf"))
 	{
@@ -411,19 +439,15 @@ void Game::handleInput(float deltaTime, Input input)
 
 
 void Game::update(float deltaTime)
-{
-	player.viewCentre = player_view.getCenter();
-	player.viewSize = player_view.getSize();
+{	
+	updateUI();
 
-	//sf::Vector2i MouseCoords = sf::Mouse::getPosition(*window);
-	//player.target = window->mapPixelToCoords(MouseCoords);
-
-	player.target = input->getMouseCoords(window);
-
-	float left = player_view.getCenter().x - (player_view.getSize().x / 2);
-	float right = player_view.getCenter().x + (player_view.getSize().x / 2);
-	float top = player_view.getCenter().y - (player_view.getSize().y / 2);
-	float bottom = player_view.getCenter().y + (player_view.getSize().y / 2);
+#pragma region IsEnemyOnScreen 
+	float left = player_view.getCenter().x - (player_view.getSize().x / 2) - (player_view.getSize().x/3);
+	float right = player_view.getCenter().x + (player_view.getSize().x / 2) + (player_view.getSize().x / 3);
+	float top = player_view.getCenter().y - (player_view.getSize().y / 2) - (player_view.getSize().y / 3);
+	float bottom = player_view.getCenter().y + (player_view.getSize().y / 2) + (player_view.getSize().y / 3);
+	
 	for (int i = 0; i < enemies.size(); i++)
 	{
 		if (enemies.at(i).getPosition().x > left && enemies.at(i).getPosition().x < right)
@@ -442,32 +466,46 @@ void Game::update(float deltaTime)
 			enemies.at(i).onScreen = false;
 		}
 	}
+#pragma endregion
 
-	updateUI();
 #pragma region CameraUpdates
 	//Updates camera target position if the player leaves the boundaries of the viewport on the y axis
-	if (player.getPosition().y < (player_view.getCenter().y - (player_view.getSize().y / 2)))
+	if (player.getPosition().y < (player_view.getCenter().y - (player_view.getSize().y / 2)) && movingCam == false)
 	{
 		targetCam = sf::Vector2f(player_view.getCenter().x, player_view.getCenter().y - screenHeight + 32);
+		MoveRooms();
+		movingCam = true;
 	}
-	else if (player.getPosition().y > (player_view.getCenter().y + (player_view.getSize().y / 2)))
+	else if (player.getPosition().y > (player_view.getCenter().y + (player_view.getSize().y / 2)) && movingCam == false)
 	{
 		targetCam = sf::Vector2f(player_view.getCenter().x, player_view.getCenter().y + screenHeight - 32);
+		MoveRooms();
+		movingCam = true;
 	}
 
 	//If the camera current position doesnt match the taget position then begin interpolation until target position is reached
 	if (player_view.getCenter() != targetCam)
 	{
-		player_view.setCenter(Interpolate(player_view.getCenter(), targetCam, 0.1f));
+		float dist = abs(player_view.getCenter().y - targetCam.y);
+		if (dist < 0.005f)
+		{
+			player_view.setCenter(targetCam);
+			movingCam = false;
+		}
+		else
+		{
+			player_view.setCenter(Interpolate(player_view.getCenter(), targetCam, 0.1f));
+		}
 	}
+
+	
+
 	//Update the viewport
 	window->setView(player_view);
 	roomBackObj.setPosition(sf::Vector2f(buildingPosX, (player_view.getCenter().y - (player_view.getSize().y / 2))));
-
 	skyBackObj.setPosition(sf::Vector2f(0, player_view.getCenter().y - screenHeight / 2));
 #pragma endregion
-
-
+	
 #pragma region AgentsUpdates
 	//Prevents the player from moving offscreen on the x-axis
 	if (player.getPosition().x > screenWidth)
@@ -480,6 +518,11 @@ void Game::update(float deltaTime)
 		player.setPosition(0 + player.getSize().x, player.getPosition().y);
 		player.falling = true;
 	}
+
+	player.viewCentre = player_view.getCenter();
+	player.viewSize = player_view.getSize();
+
+	player.target = input->getMouseCoords(window);
 
 	//Update the player
 	player.update(deltaTime);
@@ -548,7 +591,17 @@ void Game::update(float deltaTime)
 
 }
 
+void Game::MoveRooms()
+{
+	int a = (rand() % 3);
 
+	for (int i = 0; i < rooms.size(); i++)
+	{
+		a = (rand() % 3);
+		rooms.at(i).setPosition(sf::Vector2f(buildingPosX, (targetCam.y + (player_view.getSize().y/2)) - 32 - (roomHeight * (i + 1))));
+		rooms.at(i).setTexture(&roomTex.at(a));	
+	}
+}
 
 void Game::render()
 {
@@ -559,10 +612,14 @@ void Game::render()
 
 	window->draw(baseBackObj);	
 	window->draw(roomBackObj);
-	window->draw(room1);
+	/*window->draw(room1);
 	window->draw(room2);
-	window->draw(room3);
+	window->draw(room3);*/
 
+	for (int i = 0; i < rooms.size(); i++)
+	{
+		window->draw(rooms.at(i));
+	}
 
 	ground.render(window);
 
