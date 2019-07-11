@@ -43,8 +43,8 @@ public:
 	bool isMoving = false;
 	bool isCrouching = false;
 
-	int maxAmmo = 25;
-	int currentAmmo = 25;
+	int maxAmmo = 5;
+	int currentAmmo = 5;
 
 	int health = 100;
 

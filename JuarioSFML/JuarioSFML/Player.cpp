@@ -123,7 +123,7 @@ void Player::handleInput(float deltaTime)
 	}
 
 	//shoot
-	if (input->isMouseDown() && activeBullets.size() < maxAmmo)
+	if (input->isMouseDown() && currentAmmo > 0)
 	{
 		input->setMouseDown(false);
 
@@ -132,7 +132,7 @@ void Player::handleInput(float deltaTime)
 	}
 
 	//Reload
-	if (input->isKeyDown(sf::Keyboard::R))
+	if (input->isKeyDown(sf::Keyboard::R) && currentAmmo <= 0)
 	{
 		currentAmmo = 5;
 		activeBullets.clear();

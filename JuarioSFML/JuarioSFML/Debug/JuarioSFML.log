@@ -1,4 +1,47 @@
-﻿  Game.cpp
+﻿  Boss.cpp
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\enemy.h(17): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\enemy.h(18): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\player.h(39): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\player.h(40): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Enemy.cpp
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\player.h(39): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\player.h(40): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\enemy.h(17): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\enemy.h(18): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\enemy.cpp(11): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Game.cpp
 c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\enemy.h(17): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
           with
           [
@@ -148,4 +191,54 @@ c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(598)
 c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(619): warning C4018: '<': signed/unsigned mismatch
 c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(632): warning C4018: '<': signed/unsigned mismatch
 c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\game.cpp(642): warning C4018: '<': signed/unsigned mismatch
+  JuarioSFML.cpp
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\enemy.h(17): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\enemy.h(18): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\player.h(39): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\player.h(40): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\juariosfml.cpp(11): warning C4326: return type of 'main' should be 'int' instead of 'void'
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\juariosfml.cpp(43): warning C4244: 'argument': conversion from 'unsigned int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Player.cpp
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\enemy.h(17): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\enemy.h(18): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\player.h(39): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\player.h(40): warning C4244: 'initializing': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\templ\onedrive\documents\juariosfml\juariosfml\juariosfml\player.cpp(42): warning C4305: 'initializing': truncation from 'double' to 'float'
+  Generating Code...
   JuarioSFML.vcxproj -> C:\Users\templ\OneDrive\Documents\JuarioSFML\JuarioSFML\Debug\JuarioSFML.exe
